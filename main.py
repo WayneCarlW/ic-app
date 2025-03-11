@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from blueprints.auth.auth import auth
 from blueprints.dashboard.dash import dash
+from blueprints.shop.shop import shop
 from flask_mail import Mail
 from flask_pymongo import PyMongo
 from extensions import login_manager
@@ -43,6 +44,7 @@ def home():
 
 app.register_blueprint(auth, url_prefix='/auth')
 app.register_blueprint(dash, url_prefix='/dashboard')
+app.register_blueprint(shop, url_prefix='/shop')
 
 if __name__ == '__main__':
     app.run(debug=True)
