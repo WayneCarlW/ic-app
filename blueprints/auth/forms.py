@@ -11,3 +11,7 @@ class RegisterForm(FlaskForm):
 class LoginForm(FlaskForm):
     email = StringField('Email', [validators.Length(min=6, max=35), validators.Email()])
     password = PasswordField('Password', [validators.Length(min=6, max=35), validators.DataRequired()])
+
+class AdminLoginForm(FlaskForm):
+    email = StringField('Email', [validators.Length(min=6, max=35), validators.Email()])
+    password = PasswordField('Password', [validators.Length(min=6, max=35), validators.DataRequired()])

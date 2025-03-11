@@ -31,7 +31,7 @@ init_app(app)
 def load_user(user_id):
     user_data = mongo.db.users.find_one({'_id': ObjectId(user_id)})
     if user_data:
-        return User(str(user_data['_id']), user_data['email'], user_data['password'])
+        return User(str(user_data['_id']), user_data['email'], user_data['password'], user_data['role'])
     return None
 
 @app.before_request
