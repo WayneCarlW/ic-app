@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manufacturers</title>
+    <link rel="stylesheet" href="{{url_for ('static', filename='/css/shelf.css')}}">
+</head>
+<body>
+    <header class="navbar">
+        <h1 class="logo">World Peas</h1>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#">Shop</a></li>
+                <li><a href="#">Newsstand</a></li>
+                <li><a href="#">Who we are</a></li>
+                <li><a href="#">My profile</a></li>
+            </ul>
+        </nav>
+       <a href="url_for('shop.cart')" <button class="basket-button">Basket (3)</button></a>
+    </header>
+
+    <main>
+        <section class="produce-header">
+            <h2>Produce <span class="fresh">Fresh</span> <span class="date">— August 21, 2023</span></h2>
+            <div class="filters">
+                <button class="filter-button active">Default</button>
+                <button class="filter-button">A-Z</button>
+                <button class="filter-button">List view</button>
+            </div>
+        </section>
+
+        <section class="produce-list">
+            <div class="produce-card">
+                <img src="images/tomato.png" alt="Heirloom tomato">
+                <div class="card-info">
+                    <h3>Heirloom tomato</h3>
+                    <p class="price">$5.99 <span>/ lb</span></p>
+                    <p class="location">Grown in San Juan Capistrano, CA</p>
+                </div>
+            </div>
+
+            <div class="produce-card">
+                <img src="images/ginger.png" alt="Organic ginger">
+                <div class="card-info">
+                    <h3>Organic ginger</h3>
+                    <p class="price">$12.99 <span>/ lb</span></p>
+                    <p class="location">Grown in Huntington Beach, CA</p>
+                </div>
+            </div>
+
+            <div class="produce-card">
+                <img src="images/onion.png" alt="Red onion">
+                <div class="card-info">
+                    <h3>Red onion</h3>
+                    <p class="price">$3.99 <span>/ lb</span></p>
+                    <p class="location">Grown in California</p>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

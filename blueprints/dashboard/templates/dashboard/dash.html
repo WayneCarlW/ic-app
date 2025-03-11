@@ -1,3 +1,27 @@
-{% extends 'base.html' %}
-{% block content %}
+{%extends 'base.html'%}
+{%block content%}
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <nav class="nav flex-column">
+                <a class="nav-link active" href="#">Home</a>
+                <a class="nav-link" href="#">Profile</a>
+                <a class="nav-link" href="#">Settings</a>
+                <a class="nav-link" href="#">Reports</a>
+                <a class="nav-link" href="#">Help</a>
+            </nav>
+        </div>
+        <div class="col-md-9">
+            <div class="d-flex justify-content-end">
+                <a class="btn btn-danger" href="{{url_for('auth.logout')}}">Logout</a>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Dashboard</h1>
+            <p>Welcome to the dashboard</p>
+        </div>
+    </div>
+</div>
 {%endblock%}
