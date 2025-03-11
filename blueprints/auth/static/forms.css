@@ -1,168 +1,122 @@
-body {
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    background-color: #f4f4f4;
-    text-align: center;
-}
-.header {
-   position: absolute;
-    top: 10px;
-    left: 10px;
-    font-size: 32px;
-    font-weight: bold;
-    color: #28a745;
-    font-family: 'Georgia', serif; 
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); 
-}
-.form-container {
-    background: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    width: 350px;
-}
-.form-container h2 {
-    margin: 10px 0 20px;
-}
-.form-container div {
-    margin: 10px 0;
-}
-.form-container label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 5px;
-}
-.form-container input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-.form-container button {
-    width: 100%;
-    padding: 10px;
-    background-color: #28a745;
-    border: none;
-    border-radius: 5px;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-}
-.form-container button:hover {
-    background-color: #218838;
-}
-.form-container .forgot-password {
-    text-align: center;
-    margin-top: 10px;
-    color: #007BFF;
-    cursor: pointer;
-}
-.form-container .forgot-password:hover {
-    text-decoration: underline;
-}
-.reset-password {
-    display: none; 
-    text-align: center;
-    color: green;
-    margin-top: 10px;
-    font-size: 14px;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
 }
 
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
-  }
-  body{
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #00A36C;
-  }
-  .wrapper{
-    position: relative;
-    max-width: 430px;
-    width: 100%;
-    background: #fff;
-    padding: 34px;
-    border-radius: 6px;
-    box-shadow: 0 5px 10px rgba(0,0,0,0.2);
-  }
-  .wrapper h2{
-    position: relative;
-    font-size: 22px;
-    font-weight: 600;
-    color: #000000;
-  }
-  .wrapper h2::before{
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    height: 3px;
-    width: 28px;
-    border-radius: 12px;
-    background: #4070f4;
-  }
-  .wrapper form{
-    margin-top: 30px;
-  }
-  .wrapper form .input-box{
-    height: 52px;
-    margin: 18px 0;
-  }
-  form .input-box input{
-    height: 100%;
-    width: 100%;
-    outline: none;
-    padding: 0 15px;
-    font-size: 17px;
-    font-weight: 400;
-    color: #333;
-    border: 1.5px solid #C7BEBE;
-    border-bottom-width: 2.5px;
-    border-radius: 6px;
-    transition: all 0.3s ease;
-  }
-  .input-box input:focus,
-  .input-box input:valid{
-    border-color: #4070f4;
-  }
-  form .policy{
-    display: flex;
-    align-items: center;
-  }
-  form h3{
-    color: #00A36C;
-    font-size: 14px;
-    font-weight: 500;
-    margin-left: 10px;
-  }
-  .input-box.button input{
-    color: #fff;
-    letter-spacing: 1px;
-    border: none;
-    background: #00A36C;
-    cursor: pointer;
-  }
-  .input-box.button input:hover{
-    background: #228B22;
-  }
-  form .text h3{
-   color: #333;
-   width: 100%;
-   text-align: center;
-  }
-  form .text h3 a{
-    color: #00A36C;
-    text-decoration: none;
-  }
-  form .text h3 a:hover{
-    text-decoration: underline;
-  }
+body {
+  min-height: 100vh;
+  width: 100%;
+  background-image: url('https://www.patelagroindustries.com/public/images/blog/jFUdF3kNUduXME6tqrHehI0RaMgheY5NXtzSRK5r.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+.container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 430px; /* This sets the max width for both login and signup */
+  width: 100%;
+  background: rgba(255, 255, 255, 0.9); /* Translucent background */
+  border-radius: 7px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+}
+
+.container .login,
+.container .registration {
+  display: none; /* Ensure both are hidden by default */
+}
+
+/* Show login by default */
+.container .login {
+  display: block;
+}
+
+/* Toggle display based on checkbox state */
+#check:checked ~ .registration {
+  display: block;
+}
+
+#check:checked ~ .login {
+  display: none;
+}
+
+#check {
+  display: none;
+}
+
+.container .form {
+  padding: 2rem;
+}
+
+.form header {
+  font-size: 17px;
+  font-weight: 500;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.form input {
+  height: 60px;
+  width: 100%;
+  padding: 0 15px;
+  font-size: 17px;
+  margin-bottom: 1.3rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  outline: none;
+}
+
+.form input:focus {
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2);
+}
+
+.form a {
+  font-size: 16px;
+  color: #558020;
+  text-decoration: none;
+}
+
+.form a:hover {
+  text-decoration: underline;
+}
+
+.form input.button {
+  color: #fff;
+  background: #558020;
+  font-size: 1.2rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+  margin-top: 1.7rem;
+  cursor: pointer;
+  transition: 0.4s;
+}
+
+.form input.button:hover {
+  background: #74A227;
+}
+
+.signup {
+  font-size: 17px;
+  text-align: center;
+}
+
+.signup label {
+  color: #558020;
+  cursor: pointer;
+}
+
+.signup label:hover {
+  text-decoration: underline;
+}
+.log in {
+	font-size: 17px;
+  text-align: center;
+}
+.company-text {
+	font-size: 17px;
+  text-align: center;
+}
