@@ -1,0 +1,73 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f4f4f4;
+    text-align: center;
+}
+.header {
+   position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 32px;
+    font-weight: bold;
+    color: #28a745; /* Green color */
+    font-family: 'Georgia', serif; /* A visually appealing font */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow for elegance */
+}
+.form-container {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 350px;
+}
+.form-container h2 {
+    margin: 10px 0 20px;
+}
+.form-container div {
+    margin: 10px 0;
+}
+.form-container label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+.form-container input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.form-container button {
+    width: 100%;
+    padding: 10px;
+    background-color: #28a745; /* Green button */
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+.form-container button:hover {
+    background-color: #218838; /* Darker green */
+}
+.form-container .forgot-password {
+    text-align: center;
+    margin-top: 10px;
+    color: #007BFF;
+    cursor: pointer;
+}
+.form-container .forgot-password:hover {
+    text-decoration: underline;
+}
+.reset-password {
+    display: none; /* Initially hidden */
+    text-align: center;
+    color: green;
+    margin-top: 10px;
+    font-size: 14px;
+}
