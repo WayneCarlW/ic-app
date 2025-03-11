@@ -1,5 +1,8 @@
 from shop import shop
 from flask import render_template
+from models import Product
+from bson import ObjectId
+from auth import get_mongo_db
 
 @shop.route('/')
 def home():

@@ -39,6 +39,7 @@ def login():
         email = request.form['email']
         password = request.form['password']
         user_data = db.users.find_one({'email': email})
+
         if user_data:
             if check_password_hash(user_data['password'], password):
                 user = User(str(user_data['_id']), user_data['email'], user_data['password'])
@@ -100,16 +101,6 @@ def reset_password(user_id):
         flash('Password has been reset successfully!', 'success')
         return redirect(url_for('auth.login'))
     return render_template('auth/reset_password.html')
-
-@auth.route('/search', methods=['GET'])
-@login_required
-def search():
-    db = get_mongo_db()
-    if db is None:
-        return redirect(url_for('auth.search'))
-    registration_number = request.args.get('registration_number')
-    contact = db.contacts.find_one({'registration_number': registration_number})
-    return render_template('search.html', user=current_user, contact=contact)
 
 @auth.route('/logout')
 @login_required
