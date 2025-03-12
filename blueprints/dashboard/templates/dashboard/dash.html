@@ -1,27 +1,79 @@
-{%extends 'base.html'%}
-{%block content%}
+<!DOCTYPE html>
+<html>
+<title>Dashboard</title>
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        text-align: center;
+    }
+    .header {
+        background-color: #e0e0e0;
+        padding: 15px;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+    }
+    .header a {
+        text-decoration: none;
+        color: blue;
+        margin: 0 10px;
+    }
+    .container {
+        display: flex;
+        height: 100vh;
+        align-self: auto;
+    }
+    .sidebar {
+        width: 250px;
+        background-color: #fefefe;
+        color: black;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+    }
+    .sidebar a {
+        text-decoration: none;
+        color: green;
+        background-color: white;
+        padding: 10px 0;
+    }
+    .logout-btn {
+        margin-top: auto;
+        background-color: red;
+        color: white;
+        padding: 10px;
+        text-align: center;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    .content {
+        flex-grow: 1;
+        padding: 50px;
+    }
+    h1 {
+        color: #333;
+    }
+</style>
+</head>
+<body>
 <div class="container">
-    <div class="row">
-        <div class="col-md-3">
-            <nav class="nav flex-column">
-                <a class="nav-link active" href="#">Home</a>
-                <a class="nav-link" href="#">Profile</a>
-                <a class="nav-link" href="#">Settings</a>
-                <a class="nav-link" href="#">Reports</a>
-                <a class="nav-link" href="#">Help</a>
-            </nav>
-        </div>
-        <div class="col-md-9">
-            <div class="d-flex justify-content-end">
-                <a class="btn btn-danger" href="{{url_for('auth.logout')}}">Logout</a>
-            </div>
-        </div>
+    <div class="sidebar">
+        <a href="#" onclick="loadContent('dashboard')">Dashboard</a>
+        <a href="#" onclick="loadContent('profile')">Profile</a>
+        <a href="{{url_for('shop.home')}}">Shop</a>
+        <a href="#" onclick="loadContent('products')">Products</a>
+        <a href="#" onclick="loadContent('customers')">Customers</a>
+        <a href="#" onclick="loadContent('orders')">Orders</a>
+        <a href="#" onclick="loadContent('reports')">Reports</a>
+        <a href="#" onclick="loadContent('help')">Help</a>
+        <div class="logout-btn"><a style="color: none;" href="{{url_for('auth.logout')}}">Logout</a></div>
     </div>
-    <div class="row">
-        <div class="col-md-12">
-            <h1>Dashboard</h1>
-            <p>Welcome to the dashboard</p>
-        </div>
+    <div class="content">
+        <h1>Dashboard</h1>
+        <p>Welcome to the dashboard</p>
     </div>
 </div>
-{%endblock%}
+</body>
+</html>
