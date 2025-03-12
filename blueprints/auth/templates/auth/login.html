@@ -1,12 +1,9 @@
-{% extends 'base.html' %}
-
-{% block content %}
+<!DOCTYPE html>
+<html>
 <head>
-    <link rel="stylesheet" href="{{ url_for('static', filename='forms.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/forms.css') }}">
 </head>
-<body id="form">
-    <div class="header">Agri-in-smart</div>
-        
+<body id="form">        
         <div class="form-container">
             <h2>Login</h2>
             <form action="{{ url_for('auth.login') }}" method="POST">
@@ -22,8 +19,6 @@
             </form>
             <a href="{{url_for('auth.forgot_password')}}">Forgot Password?</a>
             <a href="{{url_for('auth.register')}}">Register</a>
-        </div>    
-    </div>    
+        </div>     
 </body>
 </html>
-{% endblock %}

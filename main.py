@@ -2,10 +2,11 @@ from flask import Flask, render_template, request, redirect, url_for, flash, ses
 from blueprints.auth.auth import auth
 from blueprints.dashboard.dash import dash
 from blueprints.shop.shop import shop
+from blueprints.admin.admin import admin
 from flask_mail import Mail
 from flask_pymongo import PyMongo
 from extensions import login_manager
-from flask_login import LoginManager
+from flask_login import LoginManager, current_user
 from models import User
 import os
 from extensions import init_app
@@ -40,11 +41,12 @@ def permanent_session():
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    return render_template('index.html', user=current_user, title='Home')
 
 app.register_blueprint(auth, url_prefix='/auth')
 app.register_blueprint(dash, url_prefix='/dashboard')
 app.register_blueprint(shop, url_prefix='/shop')
+app.register_blueprint(admin, url_prefix='/admin')
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -39,12 +39,17 @@ def login():
         email = request.form['email']
         password = request.form['password']
         user_data = db.users.find_one({'email': email})
+        
 
         if user_data:
             if check_password_hash(user_data['password'], password):
                 user = User(str(user_data['_id']), user_data['email'], user_data['password'], user_data['role'])
                 login_user(user)
                 flash('Logged in successfully!', 'success')
+
+                if user.is_admin():
+                    return redirect(url_for('dash.admindash'))
+                
                 return redirect(url_for('dash.index'))
             else:
                 flash('Invalid password', 'danger')
