@@ -1,9 +1,76 @@
 {% extends 'base.html' %}
-{% block content%}
-<div class="d-flex vh-100"></div>
-    <!-- Main Content -->
-    <div class="content d-flex justify-content-center align-items-center flex-grow-1 vh-100">
-        <h1>Dashboard Content</h1>
+
+{% block content %}
+<div class="container mt-5 position-relative text-center">
+    <!-- Logout Button at the Top Right -->
+    <a href="{{ url_for('admin_logout') }}" class="logout-box position-absolute">
+        Logout
+    </a>
+
+    <!-- Main Content Box -->
+    <div class="container-box mx-auto p-4">
+        <h2>Welcome to the Admin Panel &#128522;</h2>
+        <div class="nav-links">
+            <a href="{{ url_for('admin_dashboard') }}" class="dashboard-link">Dashboard</a>
+            <a href="{{ url_for('admin_shop') }}" class="shop-link">Shop Management <span style="color: rgb(228, 32, 48); font-size: 24px ">&#128722;</span></a>
+        </div>
     </div>
 </div>
+
+<!-- CSS Styling -->
+<style>
+    /* Ensure container is centered */
+    .container-box {
+        background: white;
+        padding: 40px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        width: 350px;
+        text-align: center;
+        margin: auto;
+        margin-top: 10%;
+    }
+
+    /* Links styling */
+    .nav-links {
+        margin-top: 20px;
+    }
+    .nav-links a {
+        display: block;
+        padding: 15px;
+        margin: 10px auto;
+        width: 100%;
+        border-radius: 8px;
+        text-decoration: none;
+        font-size: 18px;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    /* Button colors */
+    .dashboard-link {
+        background-color: #007bff;
+        color: white;
+    }
+    .shop-link {
+        background-color: #28a745;
+        color: white;
+    }
+
+    /* Logout button positioning */
+    .logout-box {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        padding: 10px 20px;
+        background-color: #d9edf7;
+        color: #31708f;
+        border-radius: 8px;
+        font-weight: bold;
+        text-decoration: none;
+    }
+    .logout-box:hover {
+        background-color: #bce8f1;
+    }
+</style>
 {% endblock %}
