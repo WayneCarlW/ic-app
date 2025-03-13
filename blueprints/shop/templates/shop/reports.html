@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        body {
+            display: flex;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #2c3e50;
+            color: white;
+            height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            padding: 10px 0;
+        }
+        .sidebar a:hover {
+            background-color: #34495e;
+        }
+        .main-content {
+            flex-grow: 1;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Dashboard</h2>
+        <a href="#">Home</a>
+        <a href="#">Reports</a>
+        <a href="#">Analytics</a>
+        <a href="#">Settings</a>
+    </div>
+    <div class="main-content">
+        <iframe id="content-frame" src="{{url_for('shop.manage_shelf')}}" style="width: 100%; height: 80vh; border: none;"></iframe>
+
+        <script>
+            document.querySelectorAll('.sidebar a').forEach(link => {
+                link.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    document.getElementById('content-frame').src = this.getAttribute('href') + '.html';
+                });
+            });
+        </script>
+    </div>
+</body>
+</html>

@@ -24,7 +24,12 @@ def register():
         email = request.form['email']
         password = request.form['password']
         hashed_password = generate_password_hash(password)
-        user_data = {'email': email, 'password': hashed_password, 'role': "user"}
+        user_data = {
+            'email': email,
+            'password': hashed_password,
+            'role': "user",
+            'profile_pic': None  # Add the profile_pic key with a default value
+        }
         db.users.insert_one(user_data)
         flash('Account created successfully! Please log in.', 'success')
         return redirect(url_for('auth.login'))
