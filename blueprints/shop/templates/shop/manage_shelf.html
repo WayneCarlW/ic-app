@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manufacturers</title>
+    <link rel="stylesheet" href="{{url_for ('static', filename='/css/shelf.css')}}">
+</head>
+<body>
+    <main>
+        <section class="produce-header">
+            <h2>My<span class="fresh" >Products</span> <span class="date">Today</span></h2>
+            <div class="filters">
+                <button class="filter-button active">Default</button>
+                <button class="filter-button">A-Z</button>
+                <button class="filter-button">List view</button>
+            </div>
+        </section>
+
+        <section class="produce-list">
+            {% for product in products %}
+            <div class="produce-card">
+                <img src="{{product.image}}" alt="{{product.name}}">
+                <div class="card-info">
+                    <h3>{{product.name}}</h3>
+                    <p class="price">$5.99 <span></span></p>
+                    <p class="location">{{product.description}}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </section>
+    </main>
+</body>
+</html>

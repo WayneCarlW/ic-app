@@ -61,12 +61,12 @@
 <div class="container">
     <div class="sidebar">
         <a href="#" onclick="loadContent('dashboard')">Dashboard</a>
-        <a href="#" onclick="loadContent('profile')">Profile</a>
+        <a href="{{url_for('dash.profile')}}" onclick="loadContent('profile')">Profile</a>
         <a href="{{url_for('shop.home')}}">Shop</a>
-        <a href="#" onclick="loadContent('products')">Products</a>
+        <a href="{{url_for('shop.home')}}" onclick="loadContent('products')">Products</a>
         <a href="#" onclick="loadContent('customers')">Customers</a>
         <a href="#" onclick="loadContent('orders')">Orders</a>
-        <a href="#" onclick="loadContent('reports')">Reports</a>
+        <a href="{{url_for('shop.reports')}}" onclick="loadContent('reports')">Reports</a>
         <a href="#" onclick="loadContent('help')">Help</a>
         <div class="logout-btn"><a style="color: none;" href="{{url_for('auth.logout')}}">Logout</a></div>
     </div>
