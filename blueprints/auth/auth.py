@@ -24,7 +24,13 @@ def register():
         email = request.form['email']
         password = request.form['password']
         hashed_password = generate_password_hash(password)
-        user_data = {'email': email, 'password': hashed_password}
+        user_data = {
+            'email': email, 
+            'password': hashed_password,
+            'is_approved': False,
+            'role': "user"
+        }
+
         db.users.insert_one(user_data)
         flash('Account created successfully! Please log in.', 'success')
         return redirect(url_for('auth.login'))

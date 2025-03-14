@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Page</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Profile Page</h1>
+        <div id="profile-info">
+            <h2>Welcome, {{ user.name }}</h2>
+            <p>Email: {{ user.email }}</p>
+            <p>Role: {{ user.role }}</p>
+            <div id="profile-picture"></div>
+            {% if image_id %}
+            <img src="{{ url_for('get_image', image_id=image_id) }}" alt="Profile Picture" width="150" height="150">
+            {% endif %}
+                <form method="POST" enctype="multipart/form-data" action="{{ url_for('dash.profile') }}">
+                    <label for="image">Upload Profile Picture:</label>
+                    <input type="file" name="image" id="image">
+                    <button type="submit">Upload</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- {% if user.role == 'user' %}
+        <div id="farmer-section">
+            <h3>Farmer Dashboard</h3>
+            <ul>
+                <li><a href="/dashboard/farmer/crops">Manage Crops</a></li>
+                <li><a href="/dashboard/farmer/market">Market Prices</a></li>
+                <li><a href="/dashboard/farmer/sales">Sales Records</a></li>
+            </ul>
+        </div>
+        {% elif user.role == 'manufacturer' %}
+        <div id="manufacturer-section">
+            <h3>Manufacturer Dashboard</h3>
+            <ul>
+                <li><a href="/dashboard/manufacturer/products">Manage Products</a></li>
+                <li><a href="/dashboard/manufacturer/orders">Orders</a></li>
+                <li><a href="/dashboard/manufacturer/suppliers">Suppliers</a></li>
+            </ul>
+        </div>
+        {% else %}
+        <p>Access Denied: You do not have the necessary permissions to view this page.</p>
+        {% endif %}-->
+    </div> 
+</body>
+</html>

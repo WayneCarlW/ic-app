@@ -1,0 +1,36 @@
+{% extends "base.html"%}
+{% block content %}
+<form method="post" action="" enctype="multipart/form-data" class="needs-validation" novalidate>
+    {{ form.hidden_tag() }}
+    <div class="form-group mb-3">
+        <label for="manufacturer_name" class="form-label">Manufacturer Name</label>
+        {{ form.manufacturer_name(class="form-control", id="manufacturer_name") }}
+        {% if form.manufacturer_name.errors %}
+            <div class="text-danger">
+                {{ form.manufacturer_name.errors[0] }}
+            </div>
+        {% endif %}
+    </div>
+    <div class="form-group mb-3">
+        <label for="IndustryNiche" class="form-label">Industry Niche</label>
+        {{ form.IndustryNiche(class="form-control", id="product_type") }}
+        {% if form.IndustryNiche.errors %}
+            <div class="text-danger">
+                {{ form.IndustryNiche.errors[0] }}
+            </div>
+        {% endif %}
+    </div>
+    <div class="form-group mb-3">
+        <label for="application_file" class="form-label">Upload Application File</label>
+        {{ form.application_file(class="form-control", id="application_file") }}
+        {% if form.application_file.errors %}
+            <div class="text-danger">
+                {{ form.application_file.errors[0] }}
+            </div>
+        {% endif %}
+    </div>
+    <hr>
+    <h5>Credentials</h5>
+    {% include  "auth/register_manu.html"%}
+    <button type="submit" class="btn btn-primary">Submit Application</button>
+</form>

@@ -1,0 +1,142 @@
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f8f8;
+    margin: 0;
+    padding: 0;
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    background-color: white;
+}
+
+.logo {
+    font-size: 22px;
+    color: #2e4a21;
+    font-weight: bold;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.nav-links li {
+    display: inline;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: black;
+    font-size: 16px;
+}
+
+.basket-button {
+    background-color: #3e5c2e;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.basket-button:hover {
+    background-color: #2e4a21;
+}
+
+/* Produce Header */
+.produce-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px;
+    background-color: white;
+}
+
+h2 {
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.fresh {
+    color: #2e4a21;
+    font-weight: bold;
+}
+
+.date {
+    color: gray;
+    font-size: 14px;
+}
+
+/* Filters */
+.filters {
+    display: flex;
+    gap: 10px;
+}
+
+.filter-button {
+    background: white;
+    border: 1px solid #ccc;
+    padding: 6px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.filter-button.active {
+    background-color: #3e5c2e;
+    color: white;
+}
+
+.filter-button:hover {
+    background-color: #2e4a21;
+    color: white;
+}
+
+/* Produce List */
+.produce-list {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 30px;
+}
+
+/* Produce Card */
+.produce-card {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    width: 220px;
+    text-align: center;
+}
+
+.produce-card img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+.card-info {
+    padding-top: 10px;
+}
+
+h3 {
+    font-size: 18px;
+    margin: 5px 0;
+}
+
+.price {
+    font-size: 16px;
+    font-weight: bold;
+    color: #3e5c2e;
+}
+
+.location {
+    font-size: 12px;
+    color: gray;
+}
