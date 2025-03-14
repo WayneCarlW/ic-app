@@ -1,79 +1,69 @@
 <!DOCTYPE html>
-<html>
-<title>Dashboard</title>
-<style>
-    body {
-        margin: 0;
-        font-family: Arial, sans-serif;
-        background-color: #f4f4f4;
-        text-align: center;
-    }
-    .header {
-        background-color: #e0e0e0;
-        padding: 15px;
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-    }
-    .header a {
-        text-decoration: none;
-        color: blue;
-        margin: 0 10px;
-    }
-    .container {
-        display: flex;
-        height: 100vh;
-        align-self: auto;
-    }
-    .sidebar {
-        width: 250px;
-        background-color: #fefefe;
-        color: black;
-        padding: 20px;
-        display: flex;
-        flex-direction: column;
-    }
-    .sidebar a {
-        text-decoration: none;
-        color: green;
-        background-color: white;
-        padding: 10px 0;
-    }
-    .logout-btn {
-        margin-top: auto;
-        background-color: red;
-        color: white;
-        padding: 10px;
-        text-align: center;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-    .content {
-        flex-grow: 1;
-        padding: 50px;
-    }
-    h1 {
-        color: #333;
-    }
-</style>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        body {
+            display: flex;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #2c3e50;
+            color: white;
+            height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            padding: 10px 0;
+        }
+        .sidebar a:hover {
+            background-color: #34495e;
+        }
+        .main-content {
+            flex-grow: 1;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+    </style>
 </head>
 <body>
-<div class="container">
     <div class="sidebar">
-        <a href="#" onclick="loadContent('dashboard')">Dashboard</a>
-        <a href="{{url_for('dash.profile')}}" onclick="loadContent('profile')">Profile</a>
-        <a href="{{url_for('shop.home')}}">Shop</a>
-        <a href="{{url_for('shop.home')}}" onclick="loadContent('products')">Products</a>
-        <a href="#" onclick="loadContent('customers')">Customers</a>
-        <a href="#" onclick="loadContent('orders')">Orders</a>
-        <a href="{{url_for('shop.reports')}}" onclick="loadContent('reports')">Reports</a>
-        <a href="#" onclick="loadContent('help')">Help</a>
-        <div class="logout-btn"><a style="color: none;" href="{{url_for('auth.logout')}}">Logout</a></div>
+        <h2>Dashboard</h2>
+        <a href="#" id="home-link">Home</a>
+        <a href="#" id="reports-link">Reports</a>
+        <a href="#" id="analytics-link">Analytics</a>
+        <a href="#" id="add-product-link">Add Products</a>
     </div>
-    <div class="content">
-        <h1>Dashboard</h1>
-        <p>Welcome to the dashboard</p>
+    <div class="main-content" id="content-container">
+        {% include "shop/manage_shelf.html"%}
     </div>
-</div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#home-link').click(function(event) {
+                event.preventDefault();
+                $('#content-container').load('{{ url_for("shop.manage_shelf") }}');
+            });
+
+            $('#reports-link').click(function(event) {
+                event.preventDefault();
+                $('#content-container').load('{{ url_for("shop.analytics") }}');
+            });
+
+            $('#add-product-link').click(function(event) {
+                event.preventDefault();
+                $('#content-container').load('{{ url_for("shop.add_product") }}');
+            });
+        });
+    </script>
 </body>
 </html>
