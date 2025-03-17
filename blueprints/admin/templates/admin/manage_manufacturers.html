@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manufacturers</title>
+    <link rel="stylesheet" href="{{url_for ('static', filename='/css/shelf.css')}}">
+</head>
+<body>
+    <main>
+        <section class="produce-header">
+            <h2><span class="fresh" > Manufacturers</span> <span class="date">Today</span></h2>
+            <div class="filters">
+                <button class="filter-button active">Default</button>
+                <button class="filter-button">A-Z</button>
+                <button class="filter-button">List view</button>
+            </div>
+        </section>
+
+        <section class="produce-list">
+            <table border="3">
+                <tr border="3">
+                    <th colspan="8">Manufacturers</th>
+                </tr>
+                <tr>
+                    <th>ID</th>
+                    <th>KAM ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Industry Niche</th>
+                    <th>Supporting Docs</th>
+                    <th>Approval Status</th>
+                    <th colspan="2">Actions</th>
+                </tr>
+                {% for manufacturer in manufacturers %}
+                <tr>
+                    <td>{{ manufacturer.id }}</td>
+                    <td>{{ manufacturer.kam_id }}</td>
+                    <td>{{ manufacturer.name }}</td>
+                    <td>{{ manufacturer.email }}</td>
+                    <td>{{ manufacturer.industry_niche }}</td>
+                    <td>{{ manufacturer.supporting_docs }}</td>
+                    <td>{{ manufacturer.approved}}</td>
+                    {% if not manufacturer.is_approved%}
+                    <td><button>Approve</button></td>
+                    <td><button>Decline</button></td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </table>
+        </section>
+    </main>
+</body>
+</html>

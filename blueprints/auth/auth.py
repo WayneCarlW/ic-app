@@ -5,6 +5,7 @@ from extensions import mongo, mail
 from flask_mail import Message
 from models import User
 from bson import ObjectId
+from .forms import ManufacturerApplication
 
 
 auth = Blueprint('auth', __name__, template_folder='templates', static_folder='static')
@@ -15,24 +16,65 @@ def get_mongo_db():
         return None
     return mongo.db
 
+@auth.route('/apply_manufacturer', methods=['GET', 'POST'])
+def apply_manufacturer():
+    form = ManufacturerApplication()
+    if request.method == 'POST':
+        db = get_mongo_db()
+        if db is None:
+            return redirect(url_for('auth.apply_manufacturer'))
+        
+        if form.validate_on_submit():
+            file = form.Supporting_Documents.data
+            if file:
+                doc_data = file.read()
+            else:
+                doc_data = None
+            
+            manufacturer_data = {
+                "kamid": form.kamid.data,
+                "name": form.name.data,
+                "industry_niche": form.IndustryNiche.data,
+                "supporting_documents": doc_data,
+                "user_id": current_user.id,
+                "approved": False
+            }
+            db.manufacturers.insert_one(manufacturer_data)
+            flash('Application submitted successfully! Awaiting approval', 'success')
+            return redirect(url_for('dash.manufacturerdash'))
+    
+    return render_template('auth/manu_application.html', user=current_user, form=form)
+        
 @auth.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
         db = get_mongo_db()
         if db is None:
             return redirect(url_for('auth.register'))
+        
         email = request.form['email']
         password = request.form['password']
+        role = request.form['role']  # Extract role from form data
+        
+        approved = True if role == 'farmer' or role == 'admin' else False
         hashed_password = generate_password_hash(password)
+        
         user_data = {
             'email': email,
             'password': hashed_password,
-            'role': "user",
+            'role': role,
+            'approved': approved,
             'profile_pic': None  # Add the profile_pic key with a default value
         }
+        
         db.users.insert_one(user_data)
         flash('Account created successfully! Please log in.', 'success')
+        
+        if user_data['role'] == 'manufacturer':
+            return redirect(url_for('auth.apply_manufacturer'))
+        
         return redirect(url_for('auth.login'))
+    
     return render_template('auth/register.html', user=current_user, title='Register')
 
 @auth.route('/login', methods=['GET', 'POST'])
@@ -48,12 +90,19 @@ def login():
 
         if user_data:
             if check_password_hash(user_data['password'], password):
-                user = User(str(user_data['_id']), user_data['email'], user_data['password'], user_data['role'])
+                user = User(str(user_data['_id']), user_data['email'], user_data['password'], user_data['role'], user_data['profile_pic'])
                 login_user(user)
                 flash('Logged in successfully!', 'success')
 
                 if user.is_admin():
                     return redirect(url_for('dash.admindash'))
+                
+                if user.is_manufacturer():
+                    if user_data['approved']:
+                        return redirect(url_for('dash.manufacturerdash'))
+                    else:
+                        flash('Your account is not approved yet.', 'danger')
+                        return redirect(url_for('auth.login'))
                 
                 return redirect(url_for('dash.index'))
             else:

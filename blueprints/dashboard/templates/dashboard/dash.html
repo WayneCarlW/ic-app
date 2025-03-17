@@ -12,9 +12,12 @@
         background-color: #e0e0e0;
         padding: 15px;
         display: flex;
-        justify-content: flex-end;
+        justify-content: space-between;  /* Spread content evenly */
         align-items: center;
+        width: 100%;  /* Ensures full width */
+        box-sizing: border-box; /* Prevents overflow issues */
     }
+    
     .header a {
         text-decoration: none;
         color: blue;
@@ -33,12 +36,7 @@
         display: flex;
         flex-direction: column;
     }
-    .sidebar a {
-        text-decoration: none;
-        color: green;
-        background-color: white;
-        padding: 10px 0;
-    }
+
     .logout-btn {
         margin-top: auto;
         background-color: red;
@@ -55,25 +53,90 @@
     h1 {
         color: #333;
     }
+    .container {
+    display: flex;
+    flex-direction: row; /* Ensure sidebar and content are side by side */
+    height: 100vh;
+    }
+
+    .sidebar {
+        width: 250px;
+        background-color: #fefefe;
+        padding: 20px;
+        flex-shrink: 0;
+    }
+
+    .content {
+        flex-grow: 1;
+        padding: 50px;
+        width: calc(100% - 250px); /* Adjust to avoid breaking the layout */
+    }
+
 </style>
 </head>
-<body>
+<body>   
 <div class="container">
     <div class="sidebar">
-        <a href="#" onclick="loadContent('dashboard')">Dashboard</a>
-        <a href="{{url_for('dash.profile')}}" onclick="loadContent('profile')">Profile</a>
-        <a href="{{url_for('shop.home')}}">Shop</a>
-        <a href="{{url_for('shop.home')}}" onclick="loadContent('products')">Products</a>
-        <a href="#" onclick="loadContent('customers')">Customers</a>
-        <a href="#" onclick="loadContent('orders')">Orders</a>
-        <a href="{{url_for('shop.reports')}}" onclick="loadContent('reports')">Reports</a>
-        <a href="#" onclick="loadContent('help')">Help</a>
-        <div class="logout-btn"><a style="color: none;" href="{{url_for('auth.logout')}}">Logout</a></div>
+        <h2>Dashboard</h2>
+        <a href="#" id="home-link">Home</a>
+        {% if user.is_authenticated %}
+            {% if user.role == 'admin' %}
+                <a href="#" id="reports-link">Reports</a>
+                <a href="#" id="analytics-link">Analytics</a>
+                <a href="#" id="manage-manufacturers-link">Manage Manufacturers</a>
+            {% endif %}
+            {% if user.role == 'manufacturer' %}
+                <a href="#" id="add-product-link">Add Products</a>
+                <a href="#" id="manage-shelf-link">Manage Shelf</a>
+            {% endif %}
+        {% endif %}
     </div>
-    <div class="content">
-        <h1>Dashboard</h1>
-        <p>Welcome to the dashboard</p>
+    <div class="main-content" id="content-container">
+        {% if user.is_authenticated %}
+            {% if user.role == 'manufacturer' %}
+                {% include "shop/manage_shelf.html" %}
+            {% else %}
+                {% include "shop/shelf.html" %}
+            {% endif %}
+        {% else %}
+            <p>Please log in to view the dashboard.</p>
+        {% endif %}
     </div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#home-link').click(function(event) {
+            event.preventDefault();
+            $('#content-container').load('{{ url_for("shop.manage_shelf") }}');
+            document.body.offsetHeight;
+        });
+
+        $('#reports-link').click(function(event) {
+            event.preventDefault();
+            $('#content-container').load('{{ url_for("shop.analytics") }}');
+            document.body.offsetHeight;
+        });
+
+        $('#add-product-link').click(function(event) {
+            event.preventDefault();
+            $('#content-container').load('{{ url_for("shop.add_product") }}');
+            document.body.offsetHeight;
+        });
+
+        $('#manage-manufacturers-link').click(function(event) {
+            event.preventDefault();
+            $('#content-container').load('{{ url_for("admin.manage_manufacturers") }}');
+            document.body.offsetHeight;
+        });
+
+        $('#manage-shelf-link').click(function(event) {
+            event.preventDefault();
+            $('#content-container').load('{{ url_for("shop.manage_shelf") }}');
+            document.body.offsetHeight;
+        });
+    });
+</script>
 </body>
 </html>

@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Update Order{% endblock %}
+
+{% block content %}
+<h2>Update Order Status</h2>
+<form method="POST">
+    <label class="form-label">Order Status</label>
+    <select name="status" class="form-control">
+        <option value="Pending">Pending</option>
+        <option value="Processing">Processing</option>
+        <option value="Shipped">Shipped</option>
+        <option value="Delivered">Delivered</option>
+    </select>
+    <button type="submit" class="btn btn-primary mt-3">Update</button>
+</form>
+{% endblock %}

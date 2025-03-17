@@ -20,11 +20,15 @@
         <section class="produce-list">
             {% for product in products %}
             <div class="produce-card">
-                <img src="{{product.image}}" alt="{{product.name}}">
+                <img src="{{ url_for('shop.product_image', product_id=product._id) }}" alt="{{ product.name }}" width="100">
                 <div class="card-info">
                     <h3>{{product.name}}</h3>
-                    <p class="price">$5.99 <span></span></p>
+                    <p class="price">KES {{product.price}}<span></span></p>
                     <p class="location">{{product.description}}</p>
+                    <form method="POST" action="{{ url_for('shop.delete_product', product_id=product._id) }}">
+                        <button type="submit" class="filter-button active">Delete</button>
+                        <a href="{{ url_for('shop.edit_product', product_id=product._id) }}" class="edit-button"><button type="submit" class="edit-button">Edit</button></a>
+                    </form>
                 </div>
             </div>
             {% endfor %}
