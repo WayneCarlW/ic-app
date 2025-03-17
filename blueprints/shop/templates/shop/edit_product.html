@@ -3,7 +3,7 @@
 {% block content %}
 <div class="container mt-5">
     <h2>Upload Product</h2>
-    <form method="POST" action="{{url_for('shop.add_product')}}" enctype="multipart/form-data">
+    <form method="POST" action="{{url_for('shop.edit')}}" enctype="multipart/form-data">
         {{ form.hidden_tag() }}
 
         <div class="container" style="max-width: 500px;">

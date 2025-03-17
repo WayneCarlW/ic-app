@@ -93,6 +93,15 @@ h2 {
     color: white;
 }
 
+.edit-button{
+    background-color:green;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
 .filter-button:hover {
     background-color: #2e4a21;
     color: white;

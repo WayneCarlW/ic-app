@@ -2,22 +2,16 @@
 
 {% block content %}
 <div class="container mt-5 position-relative text-center">
-    <!-- Logout Button at the Top Right -->
-    <a href="{{ url_for('admin_logout') }}" class="logout-box position-absolute">
-        Logout
-    </a>
-
     <!-- Main Content Box -->
     <div class="container-box mx-auto p-4">
         <h2>Welcome to the Admin Panel &#128522;</h2>
         <div class="nav-links">
-            <a href="{{ url_for('admin_dashboard') }}" class="dashboard-link">Dashboard</a>
-            <a href="{{ url_for('admin_shop') }}" class="shop-link">Shop Management <span style="color: rgb(228, 32, 48); font-size: 24px ">&#128722;</span></a>
+            <a href="{{ url_for('admin.dashboard') }}" class="dashboard-link">Dashboard</a>
+            <a href="{{ url_for('admin.manage_manufacturers') }}" class="shop-link">Shop Management <span style="color: rgb(228, 32, 48); font-size: 24px ">&#128722;</span></a>
         </div>
     </div>
 </div>
 
-<!-- CSS Styling -->
 <style>
     /* Ensure container is centered */
     .container-box {

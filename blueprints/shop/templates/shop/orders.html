@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Orders{% endblock %}
+
+{% block content %}
+<h2>Your Orders</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Order ID</th>
+            <th>Total</th>
+            <th>Status</th>
+            <th>Details</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for order in orders %}
+        <tr>
+            <td>{{ order._id }}</td>
+            <td>KES {{ order.total }}</td>
+            <td>{{ order.status }}</td>
+            <td>
+                <button class="btn btn-info" data-bs-toggle="collapse" data-bs-target="#order_{{ order._id }}">View</button>
+            </td>
+        </tr>
+        <tr class="collapse" id="order_{{ order._id }}">
+            <td colspan="4">
+                <ul class="list-group">
+                    {% for item in order.items %}
+                    <li class="list-group-item">
+                        {{ item.name }} - KES {{ item.price }} x {{ item.quantity }}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
