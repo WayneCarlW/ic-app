@@ -7,116 +7,119 @@
 <title>Dashboard</title>
 
 <style>
-.body {
-    margin: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern, clean font */
-    background-color: #f8f9fa; /* Light, neutral background */
-    text-align: center;
-}
+    body {
+        margin: 0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f8f9fa;
+        text-align: center;
+    }
+    
+    .header {
+        background-color: #ffffff;
+        padding: 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    .header a {
+        text-decoration: none;
+        color: #3498db;
+        margin: 0 15px;
+        font-weight: 500;
+    }
+    
+    .container {
+        display: flex;
+        min-height: 100vh; /* changed height to min-height */
+    }
+    
+    .sidebar {
+        width: 250px;
+        background-color: #e8f5e9;
+        color: #333;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
+        /* removed height 100% and added flex-shrink */
+        flex-shrink: 0;
+    }
+    
+    .sidebar a {
+        text-decoration: none;
+        color: #2e7d32;
+        padding: 12px 15px;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+        font-weight: 500;
+    }
+    
+    .sidebar a:hover {
+        background-color: #dcedc8;
+    }
+    
+    .logout-btn {
+        margin-top: auto;
+        background-color: #4caf50;
+        color: white;
+        padding: 12px 15px;
+        text-align: center;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    
+    .logout-btn a {
+        color: white;
+        text-decoration: none;
+    }
+    
+    .logout-btn:hover {
+        background: #388e3c;
+    }
+    
+    .content {
+        flex-grow: 1;
+        padding: 50px;
+        text-align: left;
+    }
+    
+    h1 {
+        color: #333;
+        margin-bottom: 20px;
+    }
+    
+    .footer {
+        background-color: #f0f0f0;
+        padding: 15px;
+        text-align: center;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        border-top: 1px solid #ddd;
+    }
+    
+    .logo img {
+        height: 40px;
+    }
+    </style>
 
-.header {
-    background-color: #ffffff; /* White header for contrast */
-    padding: 15px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-}
-
-.header a {
-    text-decoration: none;
-    color: #3498db; /* Blue for links, similar to Agrivi's link style */
-    margin: 0 15px; /* Increased margin for spacing */
-    font-weight: 500; /* Slightly bolder font weight */
-}
-
-.container {
-    display: flex;
-    height: 100vh;
-    align-self: auto;
-}
-
-.sidebar {
-    width: 250px;
-    background-color: #e8f5e9; /* Light green sidebar, Agrivi-inspired */
-    color: #333; /* Darker text for readability */
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1); /* Shadow to separate sidebar */
-}
-
-.sidebar a {
-    text-decoration: none;
-    color: #2e7d32; /* Darker green for sidebar links */
-    padding: 12px 15px; /* Increased padding for better click area */
-    border-radius: 5px; /* Rounded corners for buttons/links */
-    transition: background-color 0.3s ease; /* Smooth hover transition */
-    font-weight: 500;
-}
-
-.sidebar a:hover {
-    background-color: #dcedc8; /* Lighter green on hover */
-}
-.logout-btn {
-    margin-top: auto;
-    background-color: #4caf50; /* Green logout button */
-    color: white; /* Changed to white for visibility */
-    padding: 12px 15px;
-    text-align: center;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.logout-btn a {
-    color: white; /* Force link color to white as well */
-    text-decoration: none;
-}
-.logout-btn:hover {
-    background: #388e3c; /* Darker green on hover */
-}
-
-.content {
-    flex-grow: 1;
-    padding: 50px;
-    text-align: left; /* Align content to the left */
-}
-
-h1 {
-    color: #333;
-    margin-bottom: 20px;
-}
-
-.footer {
-    background-color: #f0f0f0;
-    padding: 15px;
-    text-align: center;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    border-top: 1px solid #ddd; /* Subtle top border */
-}
-
-.logo img {
-    height: 40px;
-}
-
-</style>
 
 </head>
 
 <body>
 
-    <div class="header">
+ <div class="header">
 
-        <div class="logo">
+ <div class="logo">
 
-            <a href="#"><img src="https://imgur.com/a/QQ1N3Ao" alt="Logo"></a>
+  <a href="#"><img src="https://cdn.pixabay.com/photo/2020/08/05/13/27/eco-5465461_1280.png" alt="Logo"></a>
 
-        </div>
+ </div>
 
-        <div class="nav-links">
+ <div class="nav-links">
 
             <a href="#">Home</a>
 
@@ -124,41 +127,41 @@ h1 {
 
             <a href="#">Contact</a>
 
-        </div>
+ </div>
 
-    </div>
+ </div>
 
 <div class="container">
 
-    <div class="sidebar">
+ <div class="sidebar">
 
-        <a href="#" onclick="loadContent('dashboard')">Dashboard</a>
+ <a href="#" onclick="loadContent('dashboard')">Dashboard</a>
 
-        <a href="{{url_for('dash.profile')}}" onclick="loadContent('profile')">Profile</a>
+ <a href="{{url_for('dash.profile')}}" onclick="loadContent('profile')">Profile</a>
 
-        <a href="{{url_for('shop.home')}}">Shop</a>
+ <a href="{{url_for('shop.home')}}">Shop</a>
 
-        <a href="{{url_for('shop.home')}}" onclick="loadContent('products')">Products</a>
+ <a href="{{url_for('shop.home')}}" onclick="loadContent('products')">Products</a>
 
-        <a href="#" onclick="loadContent('customers')">Customers</a>
+ <a href="#" onclick="loadContent('customers')">Customers</a>
 
-        <a href="#" onclick="loadContent('orders')">Orders</a>
+ <a href="#" onclick="loadContent('orders')">Orders</a>
 
-        <a href="{{url_for('shop.reports')}}" onclick="loadContent('reports')">Reports</a>
+ <a href="{{url_for('shop.reports')}}" onclick="loadContent('reports')">Reports</a>
 
-        <a href="#" onclick="loadContent('help')">Help</a>
+ <a href="#" onclick="loadContent('help')">Help</a>
 
-        <div class="logout-btn"><a style="color: none;" href="{{url_for('auth.logout')}}">Logout</a></div>
+ <div class="logout-btn"><a style="color: none;" href="{{url_for('auth.logout')}}">Logout</a></div>
 
-    </div>
+ </div>
 
-    <div class="content">
+ <div class="content">
 
-        <h1>Dashboard</h1>
+  <h1>Dashboard</h1>
 
-        <p>Welcome to the dashboard</p>
+ <p>Welcome to the dashboard</p>
 
-    </div>
+ </div>
 
 </div>
 
