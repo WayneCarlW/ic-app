@@ -6,12 +6,12 @@ from extensions import mongo, fs
 
 dash = Blueprint('dash', __name__, template_folder='templates')
 
-@login_required
+# @login_required
 @dash.route('/')
 def index():
     return render_template('dashboard/dash.html', user=current_user)
 
-@login_required
+# @login_required
 @dash.route('/profile', methods=['GET', 'POST'])
 def profile():
     if request.method == 'POST':
