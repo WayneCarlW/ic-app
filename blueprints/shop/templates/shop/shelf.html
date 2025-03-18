@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manufacturers</title>
-    <link rel="stylesheet" href="{{url_for ('static', filename='/css/shelf.css')}}">
+    <title>Products</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='/css/shelf.css') }}">
 </head>
 <body>
     <header class="navbar">
         <h1 class="logo">Agri-In-Smart</h1>
-        <a href="{{url_for('shop.view_cart')}}"class="basket-button">Cart</a>
+        <a href="{{ url_for('shop.view_cart') }}" class="basket-button">Cart</a>
     </header>
 
     <main>
@@ -27,10 +27,12 @@
             <div class="produce-card">
                 <img src="{{ url_for('shop.product_image', product_id=product._id) }}" alt="{{ product.name }}" width="100">
                 <div class="card-info">
-                    <h3>{{product.name}}</h3>
-                    <p class="price">KES {{product.price}}<span></span></p>
-                    <p class="location">{{product.description}}</p>
-                    <button class="add-to-cart" data-product-id="{{product._id}}">Add to Cart</button>
+                    <h3>{{ product.name }}</h3>
+                    <p class="price">KES {{ product.price }}<span></span></p>
+                    <p class="location">{{ product.description }}</p>
+                    <form method="POST" action="{{ url_for('shop.add_to_cart', product_id=product._id) }}">
+                        <button type="submit" class="filter-button active">Add to Cart</button>
+                    </form>
                 </div>
             </div>
             {% endfor %}

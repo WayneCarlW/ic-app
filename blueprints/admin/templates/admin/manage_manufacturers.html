@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manufacturers</title>
-    <link rel="stylesheet" href="{{url_for ('static', filename='/css/shelf.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='/css/shelf.css') }}">
 </head>
 <body>
     <main>
         <section class="produce-header">
-            <h2><span class="fresh" > Manufacturers</span> <span class="date">Today</span></h2>
+            <h2><span class="fresh"> Manufacturers</span> <span class="date">Today</span></h2>
             <div class="filters">
                 <button class="filter-button active">Default</button>
                 <button class="filter-button">A-Z</button>
@@ -34,15 +34,19 @@
                 </tr>
                 {% for manufacturer in manufacturers %}
                 <tr>
-                    <td>{{ manufacturer.id }}</td>
-                    <td>{{ manufacturer.kam_id }}</td>
+                    <td>{{ manufacturer._id }}</td>
+                    <td>{{ manufacturer.kamid }}</td>
                     <td>{{ manufacturer.name }}</td>
                     <td>{{ manufacturer.email }}</td>
                     <td>{{ manufacturer.industry_niche }}</td>
-                    <td>{{ manufacturer.supporting_docs }}</td>
-                    <td>{{ manufacturer.approved}}</td>
-                    {% if not manufacturer.is_approved%}
-                    <td><button>Approve</button></td>
+                    <td>{{ manufacturer.supporting_documents }}</td>
+                    <td>{{ manufacturer.approved }}</td>
+                    {% if not manufacturer.approved %}
+                    <td>
+                        <form method="POST" action="{{ url_for('admin.approve_user', user_id=manufacturer._id) }}">
+                            <button type="submit" class="filter-button active">Approve</button>
+                        </form>
+                    </td>
                     <td><button>Decline</button></td>
                     {% endif %}
                 </tr>

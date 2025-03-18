@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <h3 class="mb-4">Flagged Products</h3>
+    <div class="row">
+        {% for product in products %}
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <img src="{{ url_for('shop.product_image', product_id=product._id) }}" class="card-img-top" alt="Product Image">
+                <div class="card-body">
+                    <h5 class="card-title">{{ product.name }}</h5>
+                    <p class="text-danger"><strong>Flags: </strong>{{ product.flags }}</p>
+                    <p class="text-muted">{{ product.description }}</p>
+                    <form action="{{ url_for('shop.resolve_flag', product_id=product._id) }}" method="POST">
+                        <div class="mb-3">
+                            <textarea name="response" class="form-control" placeholder="Respond to issue..." required></textarea>
+                        </div>
+                        <button type="submit" name="action" value="respond" class="btn btn-primary btn-sm">Respond</button>
+                        <button type="submit" name="action" value="remove" class="btn btn-danger btn-sm">Remove Product</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

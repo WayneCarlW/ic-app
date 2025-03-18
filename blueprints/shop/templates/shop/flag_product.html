@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-lg">
+        <div class="card-header bg-danger text-white">
+            <h4>Flag Product</h4>
+        </div>
+        <div class="card-body">
+            <p class="text-muted">You are about to flag this product due to dissatisfaction.</p>
+            <form action="{{ url_for('shop.flag_product', product_id=product_id) }}" method="POST">
+                <div class="mb-3">
+                    <label for="comment" class="form-label">Reason for Flagging:</label>
+                    <textarea name="comment" class="form-control" rows="4" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-danger">Flag Product</button>
+                <a href="{{ url_for('shop.orders') }}" class="btn btn-secondary">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

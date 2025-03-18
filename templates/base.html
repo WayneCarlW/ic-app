@@ -47,27 +47,36 @@
       </style> -->
 </head>
 <body class="body">
-
-  <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top px-3" id="navbar">
-      <div class="container-fluid"></div>
-          <div class="ms-auto">
-              <ul id="navlist">
-                  {% if user.is_authenticated %}
-                      <li><a href="{{ url_for('dash.index') }}">Home</a></li>
-                      <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
-                      {% if current_user.is_admin() %}
-                          <li><a href="{{ url_for('admin.dashboard') }}">Admin Panel</a></li>
-                      {% endif %}
-                  {% else %}
-                      <li><a href="{{ url_for('home') }}">Home</a></li>
-                      <li><a href="{{ url_for('auth.register') }}">Register</a></li>
-                      <li><a href="{{url_for('auth.apply_manufacturer')}}">Register Manufacturer</a></li>
-                      <li><a href="{{ url_for('auth.login') }}">Login</a></li>
-                  {% endif %}
-              </ul>
-          </div>
-      </div>    
-  </nav>
+    <main>
+        <section class="produce-header">
+            <h2>My<span class="fresh" >Products</span> <span class="date">Today</span></h2>
+            <div class="filters">
+                <button class="filter-button active">Default</button>
+                <button class="filter-button">A-Z</button>
+                <button class="filter-button">List view</button>
+            </div>
+        </section>
+    <header class="navbar">
+        <h1 class="logo">Agri-In-Smart</h1>
+        <div class="ms-auto">
+            <ul id="navlist">
+                {% if user.is_authenticated %}
+                    <li><a href="{{ url_for('dash.index') }}">Home</a></li>
+                    <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
+                    <li><a href="{{url_for('shop.home')}}"></a>Shop</li>
+                    {% if current_user.is_admin() %}
+                        <li><a href="{{ url_for('admin.dashboard') }}">Admin Panel</a></li>
+                    {% endif %}
+                {% else %}
+                    <li><a href="{{ url_for('home') }}">Home</a></li>
+                    <li><a href="{{ url_for('auth.register') }}">Register</a></li>
+                    <li><a href="{{url_for('auth.apply_manufacturer')}}">Register Manufacturer</a></li>
+                    <li><a href="{{ url_for('auth.login') }}">Login</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+    </header>
   <div class="content">
       {% block content%}
       {% endblock %}
