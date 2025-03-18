@@ -22,7 +22,7 @@ def home():
 @shop.route('/cart/<product_id>', methods=['GET', 'POST'])
 @login_required
 def add_to_cart(product_id):
-    product = mongo.db.product_data.find_one({"_id": ObjectId(product_id)})
+    product = mongo.db.products.find_one({"_id": ObjectId(product_id)})
     if not product:
         return "Product not found", 404
     
@@ -37,7 +37,7 @@ def add_to_cart(product_id):
 
     mongo.db.cart.insert_one(cart_item)
     flash('Product added to cart successfully!', 'success')
-    return redirect(url_for('shop.cart'))
+    return redirect(url_for('shop.view_cart'))
 
 @shop.route('/cart')
 @login_required
@@ -133,7 +133,7 @@ def manage_shelf():
     return render_template('shop/manage_shelf.html', user=current_user, products=products)
 
 
-@shop.route('/checkout')
+@shop.route('/checkout', methods=['GET', 'POST'])
 def checkout():
     cart_items = list(mongo.db.cart.find({"user_id": current_user.id}))
     if not cart_items:
@@ -142,7 +142,7 @@ def checkout():
     order_data = {
         "user_id": current_user.id,
         "items": cart_items,
-        "total": sum(item["total"] for item in cart_items),
+        #"total": sum(item["total"] for item in cart_items),
         "status": "pending",
         "created_at": datetime.now()
     }
@@ -152,9 +152,12 @@ def checkout():
     return redirect(url_for('shop.orders'))
 
 @shop.route('/orders')
+@login_required
 def orders():
-    orders = list(mongo.db.orders.find({"user_id": current_user.id}))
-    return render_template('shop/orders.html', user=current_user, orders=orders)
+    db = get_mongo_db()
+    user_orders = db.orders.find({"user_id": current_user.id})
+    orders_list = list(user_orders)
+    return render_template('shop/orders.html', user=current_user, orders=orders_list)
 
 @shop.route("/update_order/<order_id>", methods=["POST"])
 @login_required
@@ -176,7 +179,76 @@ def analytics():
 def reports():
     return render_template('shop/reports.html', user=current_user)
 
-@shop.route('/review')
-def review():
-    return render_template('shop/review.html', user=current_user)
+@shop.route('/flag_product/<product_id>', methods=['POST'])
+@login_required
+def flag_product(product_id):
+    order = mongo.db.orders.find_one({
+        "user_id": current_user.id,
+        "items.product_id": product_id
+    })
+    if not order:
+        flash("You can only flag products you have purchased.", "danger")
+        return redirect(url_for('shop.orders'))
+
+    mongo.db.reviews.insert_one({
+        "product_id": ObjectId(product_id),
+        "user_id": current_user.id,
+        "flagged": True,
+        "comment": request.form.get("comment", ""),
+        "created_at": datetime.now()
+    })
+    
+    mongo.db.products.update_one(
+        {"_id": ObjectId(product_id)},
+        {"$inc": {"flags": 1}}
+    )
+
+    flash("Product flagged successfully.", "warning")
+    return redirect(url_for('shop.orders'))
+
+@shop.route('/flagged_products')
+@login_required
+def flagged_products():
+    if not current_user.is_manufacturer:
+        flash("Unauthorized access.", "danger")
+        return redirect(url_for('shop.home'))
+    
+    flagged_products = mongo.db.products.find({"flags": {"$gt": 0}})
+    return render_template('shop/flagged_products.html', products=flagged_products)
+
+@shop.route('/resolve_flag/<product_id>', methods=['POST'])
+@login_required
+def resolve_flag(product_id):
+    if not current_user.is_manufacturer:
+        flash("Unauthorized access.", "danger")
+        return redirect(url_for('shop.home'))
+
+    action = request.form.get("action")
+
+    if action == "remove":
+        mongo.db.products.delete_one({"_id": ObjectId(product_id)})
+        mongo.db.reviews.delete_many({"product_id": ObjectId(product_id)})
+        flash("Product removed successfully.", "success")
+
+    elif action == "respond":
+        response = request.form.get("response")
+        mongo.db.reviews.update_many(
+            {"product_id": ObjectId(product_id), "flagged": True},
+            {"$set": {"manufacturer_response": response}}
+        )
+        flash("Response added successfully.", "info")
+
+    return redirect(url_for('shop.flagged_products'))
+
+@shop.route('/review_stats')
+@login_required
+def review_stats():
+    flagged_count = mongo.db.products.count_documents({"flags": {"$gt": 0}})
+    avg_rating = mongo.db.reviews.aggregate([
+        {"$group": {"_id": None, "avg_rating": {"$avg": "$rating"}}}
+    ])
+    avg_rating = next(avg_rating, {}).get("avg_rating", 0)
+
+    return render_template('shop/review_stats.html', flagged_count=flagged_count, avg_rating=avg_rating)
+
 

@@ -32,16 +32,21 @@ def apply_manufacturer():
                 doc_data = None
             
             manufacturer_data = {
-                "kamid": form.kamid.data,
+                "kam_id": form.kamid.data,
                 "name": form.name.data,
+                "email": current_user.email,  # Include the email field
                 "industry_niche": form.IndustryNiche.data,
                 "supporting_documents": doc_data,
                 "user_id": current_user.id,
-                "approved": False
             }
+            # Save manufacturer data to the user's collection for reference
+            db.users.update_one(
+                {'_id': ObjectId(current_user.id)},
+                {'$set': {'manufacturer_application': manufacturer_data}}
+            )
             db.manufacturers.insert_one(manufacturer_data)
             flash('Application submitted successfully! Awaiting approval', 'success')
-            return redirect(url_for('dash.manufacturerdash'))
+            return redirect(url_for('dash.home'))
     
     return render_template('auth/manu_application.html', user=current_user, form=form)
         
@@ -53,6 +58,7 @@ def register():
             return redirect(url_for('auth.register'))
         
         email = request.form['email']
+        name = request.form['name']
         password = request.form['password']
         role = request.form['role']  # Extract role from form data
         
@@ -61,6 +67,7 @@ def register():
         
         user_data = {
             'email': email,
+            'name': name,
             'password': hashed_password,
             'role': role,
             'approved': approved,
@@ -82,24 +89,25 @@ def login():
     if request.method == 'POST':
         db = get_mongo_db()
         if db is None:
+            flash('Database connection error.', 'danger')
             return redirect(url_for('auth.login'))
+        
         email = request.form['email']
         password = request.form['password']
         user_data = db.users.find_one({'email': email})
         
-
         if user_data:
             if check_password_hash(user_data['password'], password):
                 user = User(str(user_data['_id']), user_data['email'], user_data['password'], user_data['role'], user_data['profile_pic'])
                 login_user(user)
                 flash('Logged in successfully!', 'success')
 
-                if user.is_admin():
+                if user.role == 'admin':
                     return redirect(url_for('dash.admindash'))
                 
-                if user.is_manufacturer():
+                if user.role == 'manufacturer':
                     if user_data['approved']:
-                        return redirect(url_for('dash.manufacturerdash'))
+                        return redirect(url_for('dash.index'))
                     else:
                         flash('Your account is not approved yet.', 'danger')
                         return redirect(url_for('auth.login'))
@@ -109,6 +117,7 @@ def login():
                 flash('Invalid password', 'danger')
         else:
             flash('Email not found', 'danger')
+    
     return render_template('auth/login.html', user=current_user, title='Login')
 
 @auth.route('/forgot-password', methods=['GET', 'POST'])

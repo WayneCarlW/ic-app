@@ -17,5 +17,6 @@ class LoginForm(FlaskForm):
 class ManufacturerApplication(FlaskForm):
     kamid = StringField('KAM ID', [validators.Length(min=1, max=150), validators.DataRequired()])
     name = StringField('Name', [validators.Length(min=1, max=150), validators.DataRequired()])
+    email = StringField('Email', [validators.Length(min=6, max=35), validators.Email()])  # Add email field
     IndustryNiche = StringField('Industry Niche', [validators.Length(min=1, max=150), validators.DataRequired()])
     Supporting_Documents = FileField('Supporting Documents', [validators.DataRequired()])

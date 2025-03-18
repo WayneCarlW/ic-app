@@ -9,15 +9,24 @@
         text-align: center;
     }
     .header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
         background-color: #e0e0e0;
         padding: 15px;
         display: flex;
-        justify-content: space-between;  /* Spread content evenly */
+        justify-content: space-between;
         align-items: center;
-        width: 100%;  /* Ensures full width */
-        box-sizing: border-box; /* Prevents overflow issues */
+        box-sizing: border-box;
+        z-index: 1000;
     }
-    
+
+    .main-content {
+        margin-top: 70px;
+    }
+
+
     .header a {
         text-decoration: none;
         color: blue;
@@ -89,20 +98,25 @@
                 <a href="#" id="add-product-link">Add Products</a>
                 <a href="#" id="manage-shelf-link">Manage Shelf</a>
             {% endif %}
+            {% if user.role == 'farmer' %}
+                <a href="#" id="view-products-link">Shop</a>
+                <a href="#" id="view-orders-link">View Orders</a>
+            {% endif%}
         {% endif %}
     </div>
-    <div class="main-content" id="content-container">
-        {% if user.is_authenticated %}
-            {% if user.role == 'manufacturer' %}
-                {% include "shop/manage_shelf.html" %}
-            {% else %}
-                {% include "shop/shelf.html" %}
-            {% endif %}
+<div class="main-content" id="content-container">
+    {% if user.is_authenticated %}
+        {% if user.role == 'manufacturer' %}
+            {% include "shop/manage_shelf.html" %}
         {% else %}
-            <p>Please log in to view the dashboard.</p>
+            {% include "shop/shelf.html" %}
         {% endif %}
-    </div>
+    {% else %}
+            <p>Please log in to view the dashboard.</p>
+    {% endif %}
 </div>
+</div>
+
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
@@ -134,6 +148,12 @@
         $('#manage-shelf-link').click(function(event) {
             event.preventDefault();
             $('#content-container').load('{{ url_for("shop.manage_shelf") }}');
+            document.body.offsetHeight;
+        });
+
+        $('#view-products-link').click(function(event) {
+            event.preventDefault();
+            $('#content-container').load('{{ url_for("shop.home") }}');
             document.body.offsetHeight;
         });
     });

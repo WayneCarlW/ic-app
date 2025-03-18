@@ -1,35 +1,39 @@
-{% extends "base.html"%}
+{% extends "base.html" %}
+
 {% block content %}
-<form method="post" action="{{ url_for('auth.apply_manufacturer') }}" enctype="multipart/form-data" class="needs-validation" novalidate>
-    {{ form.hidden_tag() }}
-    <div class="form-group mb-3">
-        <label for="manufacturer_name" class="form-label">Manufacturer Name</label>
-        {{ form.name(class="form-control", id="manufacturer_name") }}
-        {% if form.name.errors %}
-            <div class="text-danger">
-                {{ form.name.errors[0] }}
+<div class="container mt-5">
+    <h2>Manufacturer Application</h2>
+    <form method="POST" action="{{ url_for('auth.apply_manufacturer') }}" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+
+        <div class="container" style="max-width: 500px;">
+            <div class="mb-3">
+                {{ form.kamid.label(class="form-label") }}
+                {{ form.kamid(class="form-control") }}
             </div>
-        {% endif %}
-    </div>
-    <div class="form-group mb-3">
-        <label for="IndustryNiche" class="form-label">Industry Niche</label>
-        {{ form.IndustryNiche(class="form-control", id="product_type") }}
-        {% if form.IndustryNiche.errors %}
-            <div class="text-danger">
-                {{ form.IndustryNiche.errors[0] }}
+            
+            <div class="mb-3">
+                {{ form.name.label(class="form-label") }}
+                {{ form.name(class="form-control") }}
             </div>
-        {% endif %}
-    </div>
-    <div class="form-group mb-3">
-        <label for="application_file" class="form-label">Upload Application File</label>
-        {{ form.Supporting_Documents(class="form-control", id="application_file") }}
-        {% if form.Supporting_Documents.errors %}
-            <div class="text-danger">
-                {{ form.Supporting_Documents.errors[0] }}
+
+            <div class="mb-3">
+                {{ form.email.label(class="form-label") }}
+                {{ form.email(class="form-control") }}
             </div>
-        {% endif %}
-    </div>
-    <hr>
-    <button type="submit" class="btn btn-primary">Submit Application</button>
-</form>
+
+            <div class="mb-3">
+                {{ form.IndustryNiche.label(class="form-label") }}
+                {{ form.IndustryNiche(class="form-control") }}
+            </div>
+
+            <div class="mb-3">
+                {{ form.Supporting_Documents.label(class="form-label") }}
+                {{ form.Supporting_Documents(class="form-control") }}
+            </div>
+            
+            <button type="submit" class="btn btn-primary w-100">Submit Application</button>
+        </div>
+    </form>
+</div>
 {% endblock %}

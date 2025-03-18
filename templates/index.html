@@ -1,5 +1,114 @@
-{% extends 'base.html' %}
-{% block content %}
-    <h1>Home</h1>
-    <p>Welcome to the home page!</p>
-{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agriculture Sales</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .hero {
+            background: url('https://www.freepik.com/free-photo/close-up-farmer-holding-plants_19673499.htm#fromView=search&page=1&position=26&uuid=9dedb774-a2dd-40ff-95d8-48dc38f656ef&query=agricultural+photos') no-repeat center center/cover;
+            height: 80vh;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: bold;
+        }
+        .hero p {
+            font-size: 1.2rem;
+        }
+        .btn-green {
+            background-color: #228B22;
+            color: white;
+        }
+        .btn-green:hover {
+            background-color: #1c6b1c;
+        }
+        .category-card {
+            border: none;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        .category-card:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-success">
+        <div class="container">
+            <a class="navbar-brand" href="#">Agri-in-Smart</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#categories">Categories</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div>
+            <h1>Connecting Farmers & Manufacturers</h1>
+            <p>Buy and sell high-quality agricultural products with ease.</p>
+            <a href="#categories" class="btn btn-green btn-lg">Explore Products</a>
+        </div>
+    </section>
+
+    <section id="categories" class="container py-5">
+        <h2 class="text-center text-success">Featured Categories</h2>
+        <div class="row mt-4">
+            <div class="col-md-4">
+                <div class="card category-card">
+                    <img src="https://source.unsplash.com/400x300/?fruits" class="card-img-top" alt="Fruits">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Fresh Fruits</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card category-card">
+                    <img src="https://source.unsplash.com/400x300/?vegetables" class="card-img-top" alt="Vegetables">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Organic Vegetables</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card category-card">
+                    <img src="https://source.unsplash.com/400x300/?seeds" class="card-img-top" alt="Seeds">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Quality Seeds</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="bg-light py-5">
+        <div class="container text-center">
+            <h2 class="text-success">Get in Touch</h2>
+            <p>Contact us for inquiries or partnerships.</p>
+            <a href="#" class="btn btn-green">Contact Us</a>
+        </div>
+    </section>
+
+    <footer class="bg-success text-white text-center py-3">
+        <p>&copy; 2025 AgriSales. All rights reserved.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -11,6 +11,10 @@ dash = Blueprint('dash', __name__, template_folder='templates')
 def index():
     return render_template('dashboard/dash.html', user=current_user)
 
+@dash.route('/home')
+def home():
+    return "<h1>Welcome Home!</h1>"
+
 @login_required
 @dash.route('/profile', methods=['GET', 'POST'])
 def profile():
