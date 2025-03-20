@@ -1,162 +1,146 @@
 <!DOCTYPE html>
-<html>
-<title>Dashboard</title>
-<style>
-    body {
-        margin: 0;
-        font-family: Arial, sans-serif;
-        background-color: #f4f4f4;
-        text-align: center;
-    }
-    .header {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        background-color: #e0e0e0;
-        padding: 15px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        box-sizing: border-box;
-        z-index: 1000;
-    }
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | AgriSales</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .sidebar {
+            width: 250px; /* Adjust width */
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            background-color: #5A3E2B; /* Brown shade */
+            padding-top: 20px;
+        }
 
-    .main-content {
-        margin-top: 70px;
-    }
+        .content {
+            margin-left: 260px; /* Adjusted to fit beside the sidebar */
+            padding: 20px;
+        }
 
-
-    .header a {
-        text-decoration: none;
-        color: blue;
-        margin: 0 10px;
-    }
-    .container {
-        display: flex;
-        height: 100vh;
-        align-self: auto;
-    }
-    .sidebar {
-        width: 250px;
-        background-color: #fefefe;
-        color: black;
-        padding: 20px;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .logout-btn {
-        margin-top: auto;
-        background-color: red;
-        color: white;
-        padding: 10px;
-        text-align: center;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-    .content {
-        flex-grow: 1;
-        padding: 50px;
-    }
-    h1 {
-        color: #333;
-    }
-    .container {
-    display: flex;
-    flex-direction: row; /* Ensure sidebar and content are side by side */
-    height: 100vh;
-    }
-
-    .sidebar {
-        width: 250px;
-        background-color: #fefefe;
-        padding: 20px;
-        flex-shrink: 0;
-    }
-
-    .content {
-        flex-grow: 1;
-        padding: 50px;
-        width: calc(100% - 250px); /* Adjust to avoid breaking the layout */
-    }
-
-</style>
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            margin: 10px 0;
+        }
+        .sidebar a:hover {
+            color: #FFD700;
+        }
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+        }
+        .header {
+            background-color: #228B22;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+        .logout-btn {
+            background-color: red;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
 </head>
-<body>   
-<div class="container">
-    <div class="sidebar">
-        <h2>Dashboard</h2>
-        <a href="#" id="home-link">Home</a>
-        {% if user.is_authenticated %}
-            {% if user.role == 'admin' %}
-                <a href="#" id="reports-link">Reports</a>
-                <a href="#" id="analytics-link">Analytics</a>
-                <a href="#" id="manage-manufacturers-link">Manage Manufacturers</a>
-            {% endif %}
-            {% if user.role == 'manufacturer' %}
-                <a href="#" id="add-product-link">Add Products</a>
-                <a href="#" id="manage-shelf-link">Manage Shelf</a>
-            {% endif %}
-            {% if user.role == 'farmer' %}
-                <a href="#" id="view-products-link">Shop</a>
-                <a href="#" id="view-orders-link">View Orders</a>
-            {% endif%}
-        {% endif %}
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-success">
+        <div class="container">
+            <a class="navbar-brand" href="#">AgriSales</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+    </nav>
+    
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3 sidebar">
+                <h2>Dashboard</h2>
+                <a href="#" id="home-link">Home</a>
+                {% if user.is_authenticated %}
+                    {% if user.role == 'admin' %}
+                        <a href="#" id="reports-link">Reports</a>
+                        <a href="#" id="analytics-link">Analytics</a>
+                        <a href="{{url_for('admin.manage_manufacturers')}}" id="manage-manufacturers-link">Manage Manufacturers</a>
+                        <a href ="{{url_for('shop.flagged_products')}}" id="flagged-products-link">Flagged Products</a>
+                    {% endif %}
+                    {% if user.role == 'manufacturer' %}
+                        <a href="#" id="add-product-link">Add Products</a>
+                        <a href="#" id="manage-shelf-link">Manage Shelf</a>
+                        <a href="#" id="view-orders-link">View Orders</a>
+                        <a href ="{{url_for('shop.analytics')}}" id="analytics-link">Analytics</a>
+                        <a href ="{{url_for('shop.flagged_products')}}" id="flagged-products-link">Flagged Products</a>
+                    {% endif %}
+                    {% if user.role == 'farmer' %}
+                        <a href="{{url_for('shop.home')}}" id="view-products-link">Shop</a>
+                        <a href="#" id="view-orders-link">View Orders</a>
+                    {% endif %}
+                {% endif %}
+                <div class="logout-btn">Logout</div>
+            </div>
+    
+            
+            <div class="col-md-9 main-content" id="content-container">
+                <div class="container mt-4">
+                    {% if user.is_authenticated %}
+                        {% if user.role == 'manufacturer' %}
+                            {% include "shop/manage_shelf.html" %}
+                        {% else %}
+                            {% include "shop/shelf.html" %}
+                        {% endif %}
+                    {% else %}
+                        <p>Please log in to view the dashboard.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
     </div>
-<div class="main-content" id="content-container">
-    {% if user.is_authenticated %}
-        {% if user.role == 'manufacturer' %}
-            {% include "shop/manage_shelf.html" %}
-        {% else %}
-            {% include "shop/shelf.html" %}
-        {% endif %}
-    {% else %}
-            <p>Please log in to view the dashboard.</p>
-    {% endif %}
-</div>
-</div>
-
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function() {
-        $('#home-link').click(function(event) {
-            event.preventDefault();
-            $('#content-container').load('{{ url_for("shop.manage_shelf") }}');
-            document.body.offsetHeight;
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#home-link').click(function(event) {
+                event.preventDefault();
+                $('#content-container').load('{{ url_for("shop.manage_shelf") }}');
+            });
+            
+            $('#reports-link').click(function(event) {
+                event.preventDefault();
+                $('#content-container').load('{{ url_for("shop.analytics") }}');
+            });
+            
+            $('#add-product-link').click(function(event) {
+                event.preventDefault();
+                $('#content-container').load('{{ url_for("shop.add_product") }}');
+            });
+            
+            // $('#manage-manufacturers-link').click(function(event) {
+            //     event.preventDefault();
+            //     $('#content-container').load('{{ url_for("admin.manage_manufacturers") }}');
+            // });
+            
+            $('#manage-shelf-link').click(function(event) {
+                event.preventDefault();
+                $('#content-container').load('{{ url_for("shop.manage_shelf") }}');
+            });
+            
+            // $('#view-products-link').click(function(event) {
+            //     event.preventDefault();
+            //     $('#content-container').load('{{ url_for("shop.home") }}');
+            // });
         });
-
-        $('#reports-link').click(function(event) {
-            event.preventDefault();
-            $('#content-container').load('{{ url_for("shop.analytics") }}');
-            document.body.offsetHeight;
-        });
-
-        $('#add-product-link').click(function(event) {
-            event.preventDefault();
-            $('#content-container').load('{{ url_for("shop.add_product") }}');
-            document.body.offsetHeight;
-        });
-
-        $('#manage-manufacturers-link').click(function(event) {
-            event.preventDefault();
-            $('#content-container').load('{{ url_for("admin.manage_manufacturers") }}');
-            document.body.offsetHeight;
-        });
-
-        $('#manage-shelf-link').click(function(event) {
-            event.preventDefault();
-            $('#content-container').load('{{ url_for("shop.manage_shelf") }}');
-            document.body.offsetHeight;
-        });
-
-        $('#view-products-link').click(function(event) {
-            event.preventDefault();
-            $('#content-container').load('{{ url_for("shop.home") }}');
-            document.body.offsetHeight;
-        });
-    });
-</script>
+    </script>
 </body>
 </html>

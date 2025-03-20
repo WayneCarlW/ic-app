@@ -3,49 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile Page</title>
-    <link rel="stylesheet" href="/static/css/style.css">
+    <title>Agri-In-Smart | Profile</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .profile-container {
+            max-width: 650px;
+            margin: auto;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        .profile-picture {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 20px;
+            border: 4px solid #228B22;
+        }
+        .btn-green {
+            background-color: #228B22;
+            color: #fff;
+            border: none;
+        }
+        .btn-green:hover {
+            background-color: #196F14;
+        }
+        .form-label {
+            font-weight: bold;
+        }
+        .alert {
+            text-align: left;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Profile Page</h1>
-        <div id="profile-info">
-            <h2>Welcome, {{ user.name }}</h2>
-            <p>Email: {{ user.email }}</p>
-            <p>Role: {{ user.role }}</p>
-            <div id="profile-picture"></div>
+    <div class="container mt-5">
+        <div class="profile-container">
             {% if image_id %}
-            <img src="{{ url_for('get_image', image_id=image_id) }}" alt="Profile Picture" width="150" height="150">
+                <img src="{{ url_for('get_image', image_id=image_id) }}" alt="Profile Picture" class="profile-picture">
+            {% else %}
+                <img src="{{ url_for('static', filename='images/default-profile.png') }}" alt="Default Profile" class="profile-picture">
             {% endif %}
-                <form method="POST" enctype="multipart/form-data" action="{{ url_for('dash.profile') }}">
-                    <label for="image">Upload Profile Picture:</label>
-                    <input type="file" name="image" id="image">
-                    <button type="submit">Upload</button>
-                </form>
+            <form method="POST" enctype="multipart/form-data" action="{{ url_for('dash.profile') }}">
+                <div class="mb-4">
+                    <label for="image" class="form-label">Upload Profile Picture:</label>
+                    <input type="file" class="form-control" name="image" id="image">
+                </div>
+                <button type="submit" class="btn btn-green w-50">Upload</button>
+            </form>
+            <h2 class="mb-4 mt-3">Welcome, {{ user.name }}</h2>
+            <div class="alert alert-info">
+                <p><strong>Your profile details:</strong></p>
+                <label for="email" class="form-label">Email:</label>
+                <input type="text" class="form-control mb-3" value="{{ user.email }}" disabled>
+                <label for="role" class="form-label">Role:</label>
+                <input type="text" class="form-control" value="{{ user.role }}" disabled>
             </div>
         </div>
-
-        <!-- {% if user.role == 'user' %}
-        <div id="farmer-section">
-            <h3>Farmer Dashboard</h3>
-            <ul>
-                <li><a href="/dashboard/farmer/crops">Manage Crops</a></li>
-                <li><a href="/dashboard/farmer/market">Market Prices</a></li>
-                <li><a href="/dashboard/farmer/sales">Sales Records</a></li>
-            </ul>
-        </div>
-        {% elif user.role == 'manufacturer' %}
-        <div id="manufacturer-section">
-            <h3>Manufacturer Dashboard</h3>
-            <ul>
-                <li><a href="/dashboard/manufacturer/products">Manage Products</a></li>
-                <li><a href="/dashboard/manufacturer/orders">Orders</a></li>
-                <li><a href="/dashboard/manufacturer/suppliers">Suppliers</a></li>
-            </ul>
-        </div>
-        {% else %}
-        <p>Access Denied: You do not have the necessary permissions to view this page.</p>
-        {% endif %}-->
-    </div> 
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
