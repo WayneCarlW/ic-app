@@ -3,56 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manufacturers</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='/css/shelf.css') }}">
+    <title>Agri-In-Smart | Manage Manufacturers</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .table th {
+            background-color: #228B22;
+            color: white;
+        }
+        .btn-approve {
+            background-color: #228B22;
+            color: white;
+        }
+        .btn-decline {
+            background-color: #8B0000;
+            color: white;
+        }
+    </style>
 </head>
 <body>
-    <main>
-        <section class="produce-header">
-            <h2><span class="fresh"> Manufacturers</span> <span class="date">Today</span></h2>
-            <div class="filters">
-                <button class="filter-button active">Default</button>
-                <button class="filter-button">A-Z</button>
-                <button class="filter-button">List view</button>
-            </div>
-        </section>
-
-        <section class="produce-list">
-            <table border="3">
-                <tr border="3">
-                    <th colspan="8">Manufacturers</th>
-                </tr>
-                <tr>
-                    <th>ID</th>
-                    <th>KAM ID</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Industry Niche</th>
-                    <th>Supporting Docs</th>
-                    <th>Approval Status</th>
-                    <th colspan="2">Actions</th>
-                </tr>
-                {% for manufacturer in manufacturers %}
-                <tr>
-                    <td>{{ manufacturer._id }}</td>
-                    <td>{{ manufacturer.kamid }}</td>
-                    <td>{{ manufacturer.name }}</td>
-                    <td>{{ manufacturer.email }}</td>
-                    <td>{{ manufacturer.industry_niche }}</td>
-                    <td>{{ manufacturer.supporting_documents }}</td>
-                    <td>{{ manufacturer.approved }}</td>
-                    {% if not manufacturer.approved %}
-                    <td>
-                        <form method="POST" action="{{ url_for('admin.approve_user', user_id=manufacturer._id) }}">
-                            <button type="submit" class="filter-button active">Approve</button>
-                        </form>
-                    </td>
-                    <td><button>Decline</button></td>
-                    {% endif %}
-                </tr>
-                {% endfor %}
+    <div class="container mt-4">
+        <h2 class="text-center">Manage Manufacturers</h2>
+        <div class="table-responsive">
+            <table class="table table-bordered text-center">
+                <thead class="table-success">
+                    <tr>
+                        <th>ID</th>
+                        <th>KAM ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Industry Niche</th>
+                        <th>Supporting Docs</th>
+                        <th>Approval Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for manufacturer in manufacturers %}
+                    <tr>
+                        <td>{{ manufacturer._id }}</td>
+                        <td>{{ manufacturer.kamid }}</td>
+                        <td>{{ manufacturer.name }}</td>
+                        <td>{{ manufacturer.email }}</td>
+                        <td>{{ manufacturer.industry_niche }}</td>
+                        <td><a href="{{ manufacturer.supporting_documents }}" target="_blank">View</a></td>
+                        <td>{{ "Approved" if manufacturer.approved else "Pending" }}</td>
+                        <td>
+                            {% if not manufacturer.approved %}
+                                <form method="POST" action="{{ url_for('admin.approve_user', user_id=manufacturer._id) }}" class="d-inline">
+                                    <button type="submit" class="btn btn-success btn-sm">Approve</button>
+                                </form>
+                                <button class="btn btn-danger btn-sm">Decline</button>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
             </table>
-        </section>
-    </main>
+        </div>
+    </div>    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

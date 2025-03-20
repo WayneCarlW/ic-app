@@ -14,10 +14,10 @@ shop = Blueprint('shop', __name__, template_folder='templates', static_folder='s
 def home():
     db = get_mongo_db()
     if db is None:
-        return redirect(url_for('shop.shelf'))
-    products = db.products.find({'user_id': current_user.id})
-    return render_template('shop/shelf.html', user=current_user, products=products)
-
+        return redirect(url_for('shop.home'))
+    products = db.products.find()
+    products_list = list(products)
+    return render_template('shop/shelf.html', user=current_user, products=products_list)
 
 @shop.route('/cart/<product_id>', methods=['GET', 'POST'])
 @login_required
@@ -134,37 +134,56 @@ def manage_shelf():
 
 
 @shop.route('/checkout', methods=['GET', 'POST'])
+@login_required
 def checkout():
-    cart_items = list(mongo.db.cart.find({"user_id": current_user.id}))
+    cart_items_cursor = mongo.db.cart.find({"user_id": current_user.id})  
+    cart_items = list(cart_items_cursor)  # Convert cursor to list
+
     if not cart_items:
         flash('No items in cart!', 'danger')
-        return redirect(url_for('shop.cart'))
-    order_data = {
-        "user_id": current_user.id,
-        "items": cart_items,
-        #"total": sum(item["total"] for item in cart_items),
-        "status": "pending",
-        "created_at": datetime.now()
-    }
-    order_id = mongo.db.orders.insert_one(order_data).inserted_id
-    mongo.db.cart.delete_many({"user_id": current_user.id})
-    flash('Order placed successfully!', 'success')
-    return redirect(url_for('shop.orders'))
+        return redirect(url_for('shop.view_cart'))
 
-@shop.route('/orders')
+    total = sum(item["price"] * item["quantity"] for item in cart_items)  
+
+    if request.method == "POST":
+        order_data = {
+            "user_id": current_user.id,  # Store user ID for reference
+            "items": cart_items,  # Use the converted list
+            "total": total,
+            "status": "pending",
+            "created_at": datetime.now()
+        }
+
+        mongo.db.orders.insert_one(order_data)  # Insert into orders collection
+        mongo.db.cart.delete_many({"user_id": current_user.id})  # Clear user's cart
+
+        flash('Order placed successfully!', 'success')
+        return redirect(url_for('shop.orders_func'))
+
+    return render_template('shop/checkout.html', user=current_user, cart_items=cart_items, total=total)
+
+@shop.route('/myorders')
 @login_required
-def orders():
+def orders_func():
     db = get_mongo_db()
-    user_orders = db.orders.find({"user_id": current_user.id})
-    orders_list = list(user_orders)
-    return render_template('shop/orders.html', user=current_user, orders=orders_list)
+    if db is None:
+        flash('Database connection error.', 'danger')
+        return redirect(url_for('shop.home'))
+    
+    user_orders = list(db.orders.find({"user_id": current_user.id}))
+
+    if not user_orders:
+        flash("You have no orders yet.", "info")
+
+    return render_template('shop/orders.html', user=current_user, orders=user_orders)
+
 
 @shop.route("/update_order/<order_id>", methods=["POST"])
 @login_required
 def update_order(order_id):
     if not current_user.is_manufacturer:
         flash("You are not authorized to access this page.", "danger")
-        return redirect(url_for("shop.orders"))
+        return redirect(url_for("shop.orders_func"))
     new_status = request.form["status"]
     mongo.db.orders.update_one({"_id": order_id}, {"$set": {"status": new_status}})
     flash("Order updated!", "info")
@@ -188,7 +207,7 @@ def flag_product(product_id):
     })
     if not order:
         flash("You can only flag products you have purchased.", "danger")
-        return redirect(url_for('shop.orders'))
+        return redirect(url_for('shop.orders_func'))
 
     mongo.db.reviews.insert_one({
         "product_id": ObjectId(product_id),
@@ -204,7 +223,7 @@ def flag_product(product_id):
     )
 
     flash("Product flagged successfully.", "warning")
-    return redirect(url_for('shop.orders'))
+    return redirect(url_for('shop.orders_func'))
 
 @shop.route('/flagged_products')
 @login_required
@@ -214,7 +233,7 @@ def flagged_products():
         return redirect(url_for('shop.home'))
     
     flagged_products = mongo.db.products.find({"flags": {"$gt": 0}})
-    return render_template('shop/flagged_products.html', products=flagged_products)
+    return render_template('shop/flagged_products.html', products=flagged_products, user=current_user)
 
 @shop.route('/resolve_flag/<product_id>', methods=['POST'])
 @login_required
@@ -249,6 +268,6 @@ def review_stats():
     ])
     avg_rating = next(avg_rating, {}).get("avg_rating", 0)
 
-    return render_template('shop/review_stats.html', flagged_count=flagged_count, avg_rating=avg_rating)
+    return render_template('shop/review_stats.html', flagged_count=flagged_count, avg_rating=avg_rating, user=current_user)
 
 

@@ -3,89 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agri-in-smart| {{title}}</title>
-    <link 
-        rel="stylesheet" 
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-    >
+    <title>Agri-In-Smart | {{title}}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/forms.css') }}">
-    <link rel="stylesheet" href="{{url_for('static', filename='css/sidebars.css')}}">
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/sidebars/">
-    <!-- <link href="{{url_for('static', filename='/css/bootstrap.min.css')}}" rel="stylesheet">-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/sidebars.css') }}">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .navbar {
+            background-color: #228B22 !important;
+        }
+        .navbar-brand {
+            color: white !important;
+            font-weight: bold;
+        }
+        .navbar a {
+            color: white !important;
+        }
+        .content {
+            padding: 20px;
+        }
+        .alert-container {
+            max-width: 800px;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">Agri-In-Smart</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    {% if user.is_authenticated %}
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('dash.index') }}">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.logout') }}">Logout</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{url_for('shop.home')}}">Shop</a></li>
+                        {% if current_user.is_admin() %}
+                            <li class="nav-item"><a class="nav-link" href="{{ url_for('admin.dashboard') }}">Admin Panel</a></li>
+                        {% endif %}
+                    {% else %}
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('home') }}">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.register') }}">Register</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{url_for('auth.apply_manufacturer')}}">Register Manufacturer</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.login') }}">Login</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
     <div class="container mt-3">
         {% with messages = get_flashed_messages(with_categories=True) %}
             {% if messages %}
-        <div class="alert-container">
-                {% for category, message in messages %}
-                    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
-                        {{ message }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                {% endfor %}
+                <div class="alert-container">
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% endfor %}
+                </div>
             {% endif %}
-        </div>    
         {% endwith %}
     </div>
 
-    <!--Basic Bootstrap Styles
-    
-    <style>
-        .bd-placeholder-img {
-          font-size: 1.125rem;
-          text-anchor: middle;
-          -webkit-user-select: none;
-          -moz-user-select: none;
-          user-select: none;
-        }
-  
-        @media (min-width: 768px) {
-          .bd-placeholder-img-lg {
-            font-size: 3.5rem;
-          }
-        }
-      </style> -->
-</head>
-<body class="body">
-    <main>
-        <section class="produce-header">
-            <h2>My<span class="fresh" >Products</span> <span class="date">Today</span></h2>
-            <div class="filters">
-                <button class="filter-button active">Default</button>
-                <button class="filter-button">A-Z</button>
-                <button class="filter-button">List view</button>
-            </div>
-        </section>
-    <header class="navbar">
-        <h1 class="logo">Agri-In-Smart</h1>
-        <div class="ms-auto">
-            <ul id="navlist">
-                {% if user.is_authenticated %}
-                    <li><a href="{{ url_for('dash.index') }}">Home</a></li>
-                    <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
-                    <li><a href="{{url_for('shop.home')}}"></a>Shop</li>
-                    {% if current_user.is_admin() %}
-                        <li><a href="{{ url_for('admin.dashboard') }}">Admin Panel</a></li>
-                    {% endif %}
-                {% else %}
-                    <li><a href="{{ url_for('home') }}">Home</a></li>
-                    <li><a href="{{ url_for('auth.register') }}">Register</a></li>
-                    <li><a href="{{url_for('auth.apply_manufacturer')}}">Register Manufacturer</a></li>
-                    <li><a href="{{ url_for('auth.login') }}">Login</a></li>
-                {% endif %}
-            </ul>
-        </div>
+    <div class="content">
+        {% block content %}{% endblock %}
     </div>
-    </header>
-  <div class="content">
-      {% block content%}
-      {% endblock %}
-  </div>
-    <script 
-        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js">
-    </script>
-    <script 
-        src="{{url_for('static', filename='/js/sidebars.js')}}">
-    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{url_for('static', filename='/js/sidebars.js')}}"></script>
 </body>
 </html>

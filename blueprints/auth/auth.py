@@ -174,4 +174,4 @@ def reset_password(user_id):
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('auth.login'))
+    return redirect(url_for('home'))

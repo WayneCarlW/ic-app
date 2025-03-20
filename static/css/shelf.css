@@ -80,6 +80,28 @@ h2 {
     gap: 10px;
 }
 
+.quantity-counter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.quantity-counter label {
+    margin-right: 10px;
+    font-size: 1rem;
+    color: #333;
+}
+
+.quantity-counter input {
+    width: 60px;
+    padding: 5px;
+    font-size: 1rem;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
 .filter-button {
     background: white;
     border: 1px solid #ccc;

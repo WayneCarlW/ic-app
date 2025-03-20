@@ -13,14 +13,14 @@
     </header>
 
     <main>
-        <section class="produce-header">
+        <!-- <section class="produce-header">
             <h2>Products <span class="fresh">FM</span> <span class="date"></span></h2>
             <div class="filters">
                 <button class="filter-button active">Default</button>
                 <button class="filter-button">A-Z</button>
                 <button class="filter-button">List view</button>
             </div>
-        </section>
+        </section> -->
 
         <section class="produce-list">
             {% for product in products %}
@@ -31,6 +31,10 @@
                     <p class="price">KES {{ product.price }}<span></span></p>
                     <p class="location">{{ product.description }}</p>
                     <form method="POST" action="{{ url_for('shop.add_to_cart', product_id=product._id) }}">
+                        <div class="quantity-counter">
+                            <label for="quantity_{{ product._id }}">Quantity:</label>
+                            <input type="number" id="quantity_{{ product._id }}" name="quantity" value="1" min="1">
+                        </div>
                         <button type="submit" class="filter-button active">Add to Cart</button>
                     </form>
                 </div>
