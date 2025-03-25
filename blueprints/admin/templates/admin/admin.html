@@ -1,17 +1,6 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container mt-5 position-relative text-center">
-    <!-- Main Content Box -->
-    <div class="container-box mx-auto p-4">
-        <h2>Welcome to the Admin Panel &#128522;</h2>
-        <div class="nav-links">
-            <a href="{{ url_for('admin.dashboard') }}" class="dashboard-link">Dashboard</a>
-            <a href="{{ url_for('admin.manage_manufacturers') }}" class="shop-link">Shop Management <span style="color: rgb(228, 32, 48); font-size: 24px ">&#128722;</span></a>
-        </div>
-    </div>
-</div>
-
 <style>
     /* Ensure container is centered */
     .container-box {
@@ -67,4 +56,15 @@
         background-color: #bce8f1;
     }
 </style>
+<div class="container mt-5 position-relative text-center">
+    <!-- Main Content Box -->
+    <div class="container-box mx-auto p-4">
+        <h2>Welcome to the Admin Panel &#128522;</h2>
+        <div class="nav-links">
+            <a href="{{ url_for('admin.dashboard') }}" class="dashboard-link">Dashboard</a>
+            <a href="{{ url_for('admin.manage_manufacturers') }}" class="shop-link">Shop Management <span style="color: rgb(228, 32, 48); font-size: 24px ">&#128722;</span></a>
+        </div>
+    </div>
+</div>
+
 {% endblock %}

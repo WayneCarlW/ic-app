@@ -60,7 +60,11 @@ def register():
         email = request.form['email']
         name = request.form['name']
         password = request.form['password']
-        role = request.form['role']  # Extract role from form data
+        confirm_password = request.form['confirm_password']
+        if password != confirm_password:
+            flash('Passwords do not match.', 'danger')
+            return redirect(url_for('auth.register'))
+        role = request.form['role'] 
         
         approved = True if role == 'farmer' or role == 'admin' else False
         hashed_password = generate_password_hash(password)
@@ -71,7 +75,7 @@ def register():
             'password': hashed_password,
             'role': role,
             'approved': approved,
-            'profile_pic': None  # Add the profile_pic key with a default value
+            'profile_pic': None 
         }
         
         db.users.insert_one(user_data)

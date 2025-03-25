@@ -192,8 +192,19 @@ def update_order(order_id):
 
 @shop.route('/analytics')
 def analytics():
-    return render_template('shop/analytics.html', user=current_user)
+    flagged_products_count = mongo.db.products.count_documents({"flags": {"$gt": 0}})
+    total_products_count = mongo.db.products.count_documents({})
+    farmers_count = mongo.db.users.count_documents({"role": "farmer"})
+    manufacturers_count = mongo.db.users.count_documents({"role": "manufacturer"})
 
+    return render_template(
+        'shop/analytics.html',
+        user=current_user,
+        flagged_products_count=flagged_products_count,
+        total_products_count=total_products_count,
+        farmers_count=farmers_count,
+        manufacturers_count=manufacturers_count
+    )
 @shop.route('/reports')
 def reports():
     return render_template('shop/reports.html', user=current_user)
@@ -228,7 +239,7 @@ def flag_product(product_id):
 @shop.route('/flagged_products')
 @login_required
 def flagged_products():
-    if not current_user.is_manufacturer:
+    if not current_user.is_manufacturer or not current_user.is_admin:
         flash("Unauthorized access.", "danger")
         return redirect(url_for('shop.home'))
     

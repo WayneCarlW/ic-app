@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics | Agri-in-Smart</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: url('{{ url_for("static", filename="images/farm-bg.jpg") }}') no-repeat center center;
+            background-size: cover;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .analytics-container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 800px;
+        }
+        .card {
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="analytics-container">
+        <h3 class="text-center mb-4">Analytics Dashboard</h3>
+        <div class="row">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" px-5 px-5 alt="Logo">
+            <div class="col-md-6 mb-3">
+                <div class="card border-success">
+                    <h5>Farmers</h5>
+                    <p class="display-6">{{ farmers_count }}</p>
+                </div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <div class="card border-primary">
+                    <h5>Manufacturers</h5>
+                    <p class="display-6">{{ manufacturers_count }}</p>
+                </div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <div class="card border-danger">
+                    <h5>Flagged Products</h5>
+                    <p class="display-6">{{ flagged_products_count }}</p>
+                </div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <div class="card border-warning">
+                    <h5>Total Products</h5>
+                    <p class="display-6">{{ total_products_count }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

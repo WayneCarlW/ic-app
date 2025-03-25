@@ -47,7 +47,7 @@
     <div class="container mt-5">
         <div class="profile-container">
             {% if image_id %}
-                <img src="{{ url_for('get_image', image_id=image_id) }}" alt="Profile Picture" class="profile-picture">
+                <img src="{{ url_for('dash.get_image', image_id=image_id) }}" alt="Profile Picture" class="profile-picture">
             {% else %}
                 <img src="{{ url_for('static', filename='images/default-profile.png') }}" alt="Default Profile" class="profile-picture">
             {% endif %}

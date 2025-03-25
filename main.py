@@ -3,6 +3,7 @@ from blueprints.auth.auth import auth
 from blueprints.dashboard.dash import dash
 from blueprints.shop.shop import shop
 from blueprints.admin.admin import admin
+from blueprints.contact.contact import contact_bp
 from flask_mail import Mail
 from flask_pymongo import PyMongo
 from extensions import login_manager
@@ -25,7 +26,7 @@ app.config['MAIL_PASSWORD'] = '123456:::::number'
 mongo = PyMongo(app)
 mail = Mail(app)
 login_manager = LoginManager(app)
-login_manager.login_view = 'login'
+login_manager.login_view = 'auth.login'
 init_app(app)
 
 @login_manager.user_loader
@@ -47,6 +48,7 @@ app.register_blueprint(auth, url_prefix='/auth')
 app.register_blueprint(dash, url_prefix='/dashboard')
 app.register_blueprint(shop, url_prefix='/shop')
 app.register_blueprint(admin, url_prefix='/admin')
+app.register_blueprint(contact_bp, url_prefix='/contact')
 
 if __name__ == '__main__':
     app.run(debug=True)
