@@ -13,7 +13,7 @@ def dashboard():
     if not current_user.is_admin:
         flash('You are not authorized to access this page.', 'danger')
         return redirect(url_for('auth.login'))
-    return render_template('admin/admin.html', user=current_user)
+    return redirect(url_for('shop.analytics'))
 
 @admin.route('/approve_user/<user_id>', methods=['GET','POST'])
 @login_required
