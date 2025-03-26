@@ -271,15 +271,23 @@ def resolve_flag(product_id):
     return redirect(url_for('shop.flagged_products'))
 
 @shop.route('/review_stats')
-@login_required
 def review_stats():
-    flagged_count = mongo.db.products.count_documents({"flags": {"$gt": 0}})
-    avg_rating = mongo.db.reviews.aggregate([
-        {"$group": {"_id": None, "avg_rating": {"$avg": "$rating"}}}
-    ])
-    avg_rating = next(avg_rating, {}).get("avg_rating", 0)
+    db = get_mongo_db()
+    if db is None:
+        flash('Database connection error.', 'danger')
+        return redirect(url_for('shop.home'))
 
-    return render_template('shop/review_stats.html', flagged_count=flagged_count, avg_rating=avg_rating, user=current_user)
+    # Count flagged products
+    flagged_count = db.products.count_documents({"flags": {"$gt": 0}})
+
+    # Calculate average rating
+    ratings = list(db.reviews.find({}, {"rating": 1}))
+    if ratings:
+        avg_rating = sum(rating["rating"] for rating in ratings if "rating" in rating) / len(ratings)
+    else:
+        avg_rating = None  # No ratings available
+
+    return render_template('shop/review_stats.html', flagged_count=flagged_count, user=current_user, avg_rating=avg_rating)
 
 
 @shop.route('/search', methods=['GET'])
