@@ -1,9 +1,11 @@
-from flask import Blueprint, render_template, redirect, url_for, flash, request
+from flask import Blueprint, render_template, redirect, url_for, flash, request, send_file
 from flask_login import current_user, login_required
 from blueprints.auth.auth import get_mongo_db
 from bson import ObjectId
 from extensions import mongo, mail
 from flask_mail import Message
+import io
+
 
 admin = Blueprint('admin', __name__, template_folder='templates', static_folder='static')
 
@@ -63,3 +65,31 @@ def manage_manufacturers():
         return redirect(url_for('admin.dashboard'))
     manufacturers = db.users.find({'role': 'manufacturer'})
     return render_template('admin/manage_manufacturers.html', user=current_user, manufacturers=manufacturers)
+
+@admin.route('/download_document/<user_id>/<document_name>', methods=['GET'])
+@login_required
+def download_document(user_id, document_name):
+    if not current_user.is_admin:
+        flash('You are not authorized to perform this action.', 'danger')
+        return redirect(url_for('admin.dashboard'))
+
+    db = get_mongo_db()
+    user = db.users.find_one({"_id": ObjectId(user_id)})
+
+    if not user:
+        flash("User not found", 'danger')
+        return redirect(url_for('admin.manage_manufacturers'))
+
+    # Retrieve the document from the database
+    document = db.documents.find_one({"user_id": ObjectId(user_id), "supporting_documents": document_name})
+
+    if not document or "content" not in document:
+        flash("Document not found", 'danger')
+        return redirect(url_for('admin.manage_manufacturers'))
+
+    # Send the document as a file
+    return send_file(
+        io.BytesIO(document["content"]),
+        as_attachment=True,
+        download_name=document_name
+    )

@@ -22,6 +22,7 @@ def apply_manufacturer():
     if request.method == 'POST':
         db = get_mongo_db()
         if db is None:
+            flash('Database connection error.', 'danger')
             return redirect(url_for('auth.apply_manufacturer'))
         
         if form.validate_on_submit():
@@ -34,21 +35,18 @@ def apply_manufacturer():
             manufacturer_data = {
                 "kam_id": form.kamid.data,
                 "name": form.name.data,
-                "email": current_user.email,  # Include the email field
+                "email": form.email.data,  # Collect email from the form
                 "industry_niche": form.IndustryNiche.data,
                 "supporting_documents": doc_data,
-                "user_id": current_user.id,
+                "approved": False  # Default to not approved
             }
-            # Save manufacturer data to the user's collection for reference
-            db.users.update_one(
-                {'_id': ObjectId(current_user.id)},
-                {'$set': {'manufacturer_application': manufacturer_data}}
-            )
+            
+            # Save manufacturer data to the manufacturers collection
             db.manufacturers.insert_one(manufacturer_data)
-            flash('Application submitted successfully! Awaiting approval', 'success')
-            return redirect(url_for('dash.home'))
+            flash('Application submitted successfully! Awaiting approval.', 'success')
+            return redirect(url_for('auth.login'))  # Redirect to login after application
     
-    return render_template('auth/manu_application.html', user=current_user, form=form)
+    return render_template('auth/manu_application.html', form=form)
         
 @auth.route('/register', methods=['GET', 'POST'])
 def register():

@@ -1,12 +1,27 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manufacturer Application</title>
+    <!-- Bootstrap CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        form {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="text-center">Manufacturer Application</h2>
+        <div class="text-center mb-4"></div>
+            <a href="{{ url_for('home') }}" class="btn btn-primary">Back</a>
+        </div>
+        <form method="POST" action="{{ url_for('auth.apply_manufacturer') }}" enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
 
-{% block content %}
-<div class="container mt-5">
-    <h2>Manufacturer Application</h2>
-    <form method="POST" action="{{ url_for('auth.apply_manufacturer') }}" enctype="multipart/form-data">
-        {{ form.hidden_tag() }}
-
-        <div class="container" style="max-width: 500px;">
             <div class="mb-3">
                 {{ form.kamid.label(class="form-label") }}
                 {{ form.kamid(class="form-control") }}
@@ -33,7 +48,9 @@
             </div>
             
             <button type="submit" class="btn btn-success w-100">Submit Application</button>
-        </div>
-    </form>
-</div>
-{% endblock %}
+        </form>
+    </div>
+    <!-- Bootstrap JS Bundle CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76A2YFfC2Jk5z5T5z5T5z5T5z5T5z5T5z5T5z5T5z5T5z5T5z5T5z5T5z5T5z5T5z5" crossorigin="anonymous"></script>
+</body>
+</html>

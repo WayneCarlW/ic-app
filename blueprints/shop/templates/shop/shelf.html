@@ -9,6 +9,10 @@
 <body>
     <header class="navbar">
         <h1 class="logo">Agri-In-Smart</h1>
+        <form class="search-form" method="GET" action="{{ url_for('shop.search_products') }}">
+            <input type="text" name="query" class="form-control me-2" placeholder="Search products..." aria-label="Search">
+            <button type="submit" class="search-button" style="background-color: #4CAF50; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 14px;">Search</button>
+        </form>
         <a href="{{ url_for('shop.view_cart') }}" class="basket-button">Cart</a>
     </header>
 

@@ -282,3 +282,19 @@ def review_stats():
     return render_template('shop/review_stats.html', flagged_count=flagged_count, avg_rating=avg_rating, user=current_user)
 
 
+@shop.route('/search', methods=['GET'])
+def search_products():
+    query = request.args.get('q', '').strip()
+    db = get_mongo_db()
+    if db is None:
+        flash('Database connection error.', 'danger')
+        return redirect(url_for('shop.home'))
+
+    products = []
+    if query:
+        products = db.products.find({"name": {"$regex": query, "$options": "i"}})
+    else:
+        products = db.products.find()
+
+    products_list = list(products)
+    return render_template('shop/shelf.html', user=current_user, products=products_list, query=query)
