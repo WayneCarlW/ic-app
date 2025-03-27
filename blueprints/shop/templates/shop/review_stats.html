@@ -15,7 +15,13 @@
             <div class="card shadow-sm border-warning">
                 <div class="card-body text-center">
                     <h5 class="card-title text-warning">Average Product Rating</h5>
-                    <h3>{{ avg_rating|round(1) }}</h3>
+                    <h3>
+                        {% if avg_rating is not none %}
+                            {{ avg_rating|round(1) }}
+                        {% else %}
+                            No Ratings
+                        {% endif %}
+                    </h3>
                 </div>
             </div>
         </div>

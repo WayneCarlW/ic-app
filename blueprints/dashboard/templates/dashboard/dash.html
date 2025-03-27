@@ -77,7 +77,7 @@
                         <a href="{{url_for('shop.flagged_products')}}">Flagged Products</a>
                     {% endif %}
                     {% if user.role == 'manufacturer' %}
-                        <a href="#">Add Products</a>
+                        <a href="{{url_for('shop.add_product')}}">Add Products</a>
                         <a href="#">Manage Shelf</a>
                         <a href="{{url_for('shop.orders_func')}}">View Orders</a>
                         <a href="{{url_for('shop.analytics')}}">Analytics</a>

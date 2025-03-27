@@ -52,7 +52,9 @@
                         <td>{{ manufacturer.name }}</td>
                         <td>{{ manufacturer.email }}</td>
                         <td>{{ manufacturer.industry_niche }}</td>
-                        <td><a href="{{ manufacturer.supporting_documents }}" target="_blank">View</a></td>
+                        <td>
+                            <a href="{{ url_for('admin.download_document', user_id=manufacturer._id, document_name=manufacturer.supporting_documents) }}" target="_blank">View</a>
+                        </td>
                         <td>{{ "Approved" if manufacturer.approved else "Pending" }}</td>
                         <td>
                             {% if not manufacturer.approved %}
